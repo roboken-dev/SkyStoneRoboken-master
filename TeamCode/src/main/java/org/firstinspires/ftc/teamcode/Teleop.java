@@ -37,7 +37,7 @@ public class Teleop extends LinearOpMode
             motorRearRight.setPower(-gamepad1.right_stick_y);
 
             idle();
-/// test 5
+/// test 6
         }
     }
 }

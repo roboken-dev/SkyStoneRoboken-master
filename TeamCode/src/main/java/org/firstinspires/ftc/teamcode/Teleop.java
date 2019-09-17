@@ -14,12 +14,11 @@ public class Teleop extends LinearOpMode
  private DcMotor motorFrontRight; // motor 3
  private DcMotor motorRearRight; // motor 4
 
-
-
     @Override
  public void runOpMode() throws InterruptedException
-
     {
+        float speed_control = 1;
+
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
@@ -27,17 +26,49 @@ public class Teleop extends LinearOpMode
 
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+
         waitForStart();
 
         while(opModeIsActive())
         {
-            motorFrontLeft.setPower(-gamepad1.left_stick_y);
-            motorRearLeft.setPower(-gamepad1.left_stick_y);
-            motorFrontRight.setPower(-gamepad1.right_stick_y);
-            motorRearRight.setPower(-gamepad1.right_stick_y);
+            double G1rightStickY = gamepad1.right_stick_y;
+            double G1leftStickY = gamepad1.left_stick_y;
+            boolean rightBumper = gamepad1.right_bumper;
+            boolean leftBumper = gamepad1.left_bumper;
 
+            if (gamepad1.dpad_up) {
+                speed_control = 1;
+           }
+            if (gamepad1.dpad_down) {
+                speed_control = 0.25f;
+            }
+            if (gamepad1.dpad_left) {
+                speed_control = 0.5f;
+            }
+            if (gamepad1.dpad_right) {
+                speed_control = 0.5f;
+            }
+
+            if (rightBumper) {
+
+                motorFrontLeft.setPower(speed_control);
+                motorRearLeft.setPower(-speed_control);
+                motorFrontRight.setPower(-speed_control);
+                motorRearRight.setPower(speed_control);
+            }
+            else if (leftBumper) {
+                motorFrontLeft.setPower(-speed_control);
+                motorRearLeft.setPower(speed_control);
+                motorFrontRight.setPower(speed_control);
+                motorRearRight.setPower(-speed_control);
+            }
+            else {
+                motorFrontLeft.setPower(G1leftStickY*speed_control);
+                motorRearLeft.setPower(G1leftStickY*speed_control);
+                motorFrontRight.setPower(-G1rightStickY*speed_control);
+                motorRearRight.setPower(-G1rightStickY*speed_control);
+            }
             idle();
-/// test 11
         }
     }
 }

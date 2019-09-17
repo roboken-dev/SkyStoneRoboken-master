@@ -9,10 +9,10 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp(name = "TeleOp")
 public class Teleop extends LinearOpMode
 {
- private DcMotor motorFrontLeft;
- private DcMotor motorFrontRight;
- private DcMotor motorRearLeft;
- private DcMotor motorRearRight;
+ private DcMotor motorFrontLeft;  // motor1
+ private DcMotor motorRearLeft;  // motor 2
+ private DcMotor motorFrontRight; // motor 3
+ private DcMotor motorRearRight; // motor 4
 
 
 
@@ -21,8 +21,8 @@ public class Teleop extends LinearOpMode
 
     {
         motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
-        motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
+        motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
 
         motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
@@ -32,12 +32,12 @@ public class Teleop extends LinearOpMode
         while(opModeIsActive())
         {
             motorFrontLeft.setPower(-gamepad1.left_stick_y);
-            motorFrontRight.setPower(-gamepad1.right_stick_y);
             motorRearLeft.setPower(-gamepad1.left_stick_y);
+            motorFrontRight.setPower(-gamepad1.right_stick_y);
             motorRearRight.setPower(-gamepad1.right_stick_y);
 
             idle();
-/// test 10
+/// test 11
         }
     }
 }

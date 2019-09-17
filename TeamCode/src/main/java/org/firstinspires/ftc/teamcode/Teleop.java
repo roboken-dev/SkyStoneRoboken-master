@@ -33,9 +33,8 @@ public class Teleop extends LinearOpMode
         {
             double G1rightStickY = gamepad1.right_stick_y;
             double G1leftStickY = gamepad1.left_stick_y;
-            boolean rightBumper = gamepad1.right_bumper;
-            boolean leftBumper = gamepad1.left_bumper;
-
+           float G1rightTrigger= gamepad1.right_trigger;
+           float G1leftTrigger= gamepad1.left_trigger;
             if (gamepad1.dpad_up) {
                 speed_control = 1;
            }
@@ -49,18 +48,18 @@ public class Teleop extends LinearOpMode
                 speed_control = 0.5f;
             }
 
-            if (rightBumper) {
+            if (G1rightTrigger>0 && G1leftTrigger==0) {
 
-                motorFrontLeft.setPower(speed_control);
-                motorRearLeft.setPower(-speed_control);
-                motorFrontRight.setPower(-speed_control);
-                motorRearRight.setPower(speed_control);
+                motorFrontLeft.setPower(G1rightTrigger);
+                motorRearLeft.setPower(-G1rightTrigger);
+                motorFrontRight.setPower(-G1rightTrigger);
+                motorRearRight.setPower(G1rightTrigger);
             }
-            else if (leftBumper) {
-                motorFrontLeft.setPower(-speed_control);
-                motorRearLeft.setPower(speed_control);
-                motorFrontRight.setPower(speed_control);
-                motorRearRight.setPower(-speed_control);
+            else if (G1leftTrigger>0 && G1rightTrigger==0) {
+                motorFrontLeft.setPower(-G1leftTrigger);
+                motorRearLeft.setPower(G1leftTrigger);
+                motorFrontRight.setPower(G1leftTrigger);
+                motorRearRight.setPower(-G1leftTrigger);
             }
             else {
                 motorFrontLeft.setPower(G1leftStickY*speed_control);

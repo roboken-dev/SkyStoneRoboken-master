@@ -62,6 +62,8 @@ public class Teleop extends LinearOpMode
                 motorRearRight.setPower(-G1leftTrigger);
             }
             else {
+
+                // how to cube  x = Math.pow(y, 3);
                 motorFrontLeft.setPower(G1leftStickY*speed_control);
                 motorRearLeft.setPower(G1leftStickY*speed_control);
                 motorFrontRight.setPower(-G1rightStickY*speed_control);

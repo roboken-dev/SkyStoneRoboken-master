@@ -50,16 +50,16 @@ public class Teleop extends LinearOpMode
 
             if (G1rightTrigger>0 && G1leftTrigger==0) {
 
-                motorFrontLeft.setPower(G1rightTrigger);
-                motorRearLeft.setPower(-G1rightTrigger);
-                motorFrontRight.setPower(-G1rightTrigger);
-                motorRearRight.setPower(G1rightTrigger);
+                motorFrontLeft.setPower(-G1rightTrigger*speed_control);
+                motorRearLeft.setPower(G1rightTrigger*speed_control);
+                motorFrontRight.setPower(G1rightTrigger*speed_control);
+                motorRearRight.setPower(-G1rightTrigger*speed_control);
             }
             else if (G1leftTrigger>0 && G1rightTrigger==0) {
-                motorFrontLeft.setPower(-G1leftTrigger);
-                motorRearLeft.setPower(G1leftTrigger);
-                motorFrontRight.setPower(G1leftTrigger);
-                motorRearRight.setPower(-G1leftTrigger);
+                motorFrontLeft.setPower(G1leftTrigger*speed_control);
+                motorRearLeft.setPower(-G1leftTrigger*speed_control);
+                motorFrontRight.setPower(-G1leftTrigger*speed_control);
+                motorRearRight.setPower(G1leftTrigger*speed_control);
             }
             else {
 

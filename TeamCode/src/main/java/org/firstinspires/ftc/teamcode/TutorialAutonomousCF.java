@@ -1,3 +1,4 @@
+/*
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -17,8 +18,7 @@ import java.util.Locale;
 
 @Autonomous(name="TutorialAutonomousCF")
 // @Disabled
-public class TutorialAutonomousCF extends LinearOpMode
-{
+public class TutorialAutonomousCF extends LinearOpMode {
 
     // Declare Motors
     DcMotor motorLeft = null;
@@ -27,7 +27,6 @@ public class TutorialAutonomousCF extends LinearOpMode
     DigitalChannel digitalTouch;  // Hardware Device Object
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
-
 
 
     @Override
@@ -51,112 +50,108 @@ public class TutorialAutonomousCF extends LinearOpMode
 
 
         waitForStart();
-       /*
+       */
+/*
        DriveForwardTime(DRIVE_POWER,4000);
        TurnLeftTime(DRIVE_POWER,500);
        DriveForwardTime(DRIVE_POWER,4000);
        TurnRightTime(DRIVE_POWER,500);
        DriveForwardTime(DRIVE_POWER,4000);
-       */
-        // DriveTillTOuch(1);
-      /* while (opModeIsActive()) {
-           // send the info back to driver station using telemetry function.
+       *//*
 
-           telemetry.addData("Distance (cm)",
-                   String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
-           telemetry.update();
-       } */
+        // DriveTillTOuch(1);
+        while (opModeIsActive()) {
+            // send the info back to driver station using telemetry function.
+
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", sensorDistance.getDistance(DistanceUnit.CM)));
+            telemetry.update();
+        }
         DriveTillDistance(DRIVE_POWER, 12);
-        DriveForwardTime(-.5,1000);
-        TurnLeftTime(DRIVE_POWER,1000);
-        DriveForwardTime(DRIVE_POWER,500);
-        TurnRightTime(DRIVE_POWER,1500);
-        DriveForwardTime(DRIVE_POWER,8000);
+        DriveForwardTime(-.5, 1000);
+        TurnLeftTime(DRIVE_POWER, 1000);
+        DriveForwardTime(DRIVE_POWER, 500);
+        TurnRightTime(DRIVE_POWER, 1500);
+        DriveForwardTime(DRIVE_POWER, 8000);
 
         StopDriving();
 // Complete Objective
     }
-    double DRIVE_POWER=0.2;
 
-    public void DriveForward(double power)
-    {
+    double DRIVE_POWER = 0.2;
+
+    public void DriveForward(double power) {
         motorLeft.setPower(power);
         motorRight.setPower(power);
     }
-    public void StopDriving()
-    {
+
+    public void StopDriving() {
         DriveForward(0);
     }
-    public void TurnLeft(double power)
-    {
+
+    public void TurnLeft(double power) {
         motorLeft.setPower(-power);
         motorRight.setPower(power);
     }
-    public void TurnRight(double power)
-    {
+
+    public void TurnRight(double power) {
         TurnLeft(-power);
     }
-    public void DriveForwardTime(double power, long time) throws InterruptedException
-    {
+
+    public void DriveForwardTime(double power, long time) throws InterruptedException {
         DriveForward(power);
         Thread.sleep(time);
     }
-    public void TurnLeftTime(double power, long time) throws InterruptedException
-    {
+
+    public void TurnLeftTime(double power, long time) throws InterruptedException {
         TurnLeft(power);
         Thread.sleep(time);
     }
-    public void TurnRightTime(double power, long time) throws InterruptedException
-    {
+
+    public void TurnRightTime(double power, long time) throws InterruptedException {
         TurnRight(power);
         Thread.sleep(time);
     }
-    public void DriveTillTOuch (double power)
-    {
-        while (digitalTouch.getState()==true)
-        {
+
+    public void DriveTillTOuch(double power) {
+        while (digitalTouch.getState() == true) {
             DriveForward(power);
         }
 
     }
-    public void DriveTillDistance (double power, double distance)
-    {
+
+    public void DriveTillDistance(double power, double distance) {
         double howfar;
 
-        while (Double.isNaN(sensorDistance.getDistance(DistanceUnit.CM))  || sensorDistance.getDistance(DistanceUnit.CM) > distance)
-        {
+        while (Double.isNaN(sensorDistance.getDistance(DistanceUnit.CM)) || sensorDistance.getDistance(DistanceUnit.CM) > distance) {
             DriveForward(power);
         }
 
-        public void StrafeLeftTIme(double power, long time) throws InterruptedException
+        public void StrafeLeftTIme( double power, long time) throws InterruptedException
         {
-           StrafeLeft(power);
+            StrafeLeft(power);
             Thread.sleep(time);
         }
 
-        public void StrafeRightTime(double power, long time) throws InterruptedException
+        public void StrafeRightTime( double power, long time) throws InterruptedException
         {
             StrafeRight(power);
             Thread.sleep(time);
         }
-    public void StrafeRight(double power)
-        {  FrontLeft.setPower(-power);
-           RearLeft.setPower(power);
-           FrontRight.setPower(power);
-           RearRight.setPower(-power);
-
+        public void StrafeRight( double power)
+        {
+            FrontLeft.setPower(-power);
+            RearLeft.setPower(power);
+            FrontRight.setPower(power);
+            RearRight.setPower(-power);
 
 
         }
 
 
-
-
-
-
-
     }
 
+}
 
 
 
@@ -170,5 +165,4 @@ public class TutorialAutonomousCF extends LinearOpMode
 
 
 
-
-
+*/

@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
@@ -19,12 +20,13 @@ public class BasicAuto extends LinearOpMode {
     DcMotor motorRearLeft;  // motor 2
     DcMotor motorFrontRight; // motor 3
     DcMotor motorRearRight; // motor 4
+    private Servo Claw;
 
     DigitalChannel digitalTouch;  // Hardware Device Object
     ColorSensor sensorColor;
     DistanceSensor sensorDistance;
 
-    double DRIVE_POWER = 0.2;
+    double DRIVE_POWER = 1;
 
     public void runOpMode() throws InterruptedException {
 
@@ -32,22 +34,20 @@ public class BasicAuto extends LinearOpMode {
         motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
         motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
         motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
-        digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
+ //       digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
+        Claw = hardwareMap.servo.get("servo");
 
         waitForStart();
 
-        DriveTillDistance(DRIVE_POWER, 12);
+        StrafeRightTime(DRIVE_POWER, 4000);
 
-        DriveForwardTime(-.5, 1000);
+        DriveForwardTime(DRIVE_POWER, 2000);
 
-        TurnLeftTime(DRIVE_POWER, 1000);
-
-        DriveForwardTime(DRIVE_POWER, 500);
-
-        TurnRightTime(DRIVE_POWER, 1500);
-
-        DriveForwardTime(DRIVE_POWER, 8000);
-
+        // lower and grab foundation = need real claw cdde
+        Claw.setPosition(0.0);
+        sleep(500);
+        Claw.setPosition(1.0);
+        DriveForwardTime(-DRIVE_POWER, 2000);
         StopDriving();
     }
 
@@ -101,7 +101,7 @@ public class BasicAuto extends LinearOpMode {
 
 
     }
-/*
+
     public void StrafeLeftTIme(double power, long time) throws InterruptedException {
         StrafeLeft(power);
         Thread.sleep(time);
@@ -112,19 +112,20 @@ public class BasicAuto extends LinearOpMode {
         Thread.sleep(time);
     }
 
-    public void StrafeRight(double power) {
+    public void StrafeRight(double power)
+    {
         motorFrontLeft.setPower(-power);
         motorRearLeft.setPower(power);
         motorFrontRight.setPower(power);
         motorRearRight.setPower(-power);
     }
 
-    public void StrafeRight(double power) {
+    public void StrafeLeft(double power) {
         motorFrontLeft.setPower(power);
         motorRearLeft.setPower(-power);
         motorFrontRight.setPower(-power);
         motorRearRight.setPower(power);
     }
 
- */
+
 }

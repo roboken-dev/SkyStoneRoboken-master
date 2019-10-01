@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -30,8 +31,8 @@ public class BasicAuto extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.2;
-    static final double     TURN_SPEED              = 0.2;
+    static final double     DRIVE_SPEED             = 0.1;
+    static final double     TURN_SPEED              = 0.1;
 
     double DRIVE_POWER = 1;
 
@@ -51,8 +52,8 @@ public class BasicAuto extends LinearOpMode {
         robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
         robot.motorRearRight.setDirection(DcMotor.Direction.REVERSE);
 
@@ -73,9 +74,12 @@ public class BasicAuto extends LinearOpMode {
         waitForStart();
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        encoderDrive(DRIVE_SPEED,  24,  24, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
-        encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+
+        robot.Claw.setPosition(0.0);
+        encoderDrive(DRIVE_SPEED,  -24,  -24, 5.0);  // S1: Forward 24 Inches with 5 Sec timeout
+        //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
+        robot.Claw.setPosition(1.0);
+        encoderDrive(DRIVE_SPEED, 24, 24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
 
         sleep(1000);     // pause for servos to move

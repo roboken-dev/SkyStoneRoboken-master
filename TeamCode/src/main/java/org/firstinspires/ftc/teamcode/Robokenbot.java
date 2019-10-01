@@ -31,8 +31,6 @@ private ElapsedTime period =new ElapsedTime();
 
 public Robokenbot(){
 
-
-
 }
 
 public void init(HardwareMap ahwMap) {

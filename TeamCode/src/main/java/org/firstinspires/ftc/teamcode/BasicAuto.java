@@ -18,7 +18,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Autonomous (name = "BasicAuto")
+@Autonomous (name = "BasicAuto", group = "12806")
 
 public class BasicAuto extends LinearOpMode {
 
@@ -30,8 +30,8 @@ public class BasicAuto extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
-    static final double     TURN_SPEED              = 0.5;
+    static final double     DRIVE_SPEED             = 0.2;
+    static final double     TURN_SPEED              = 0.2;
 
     double DRIVE_POWER = 1;
 
@@ -48,9 +48,19 @@ public class BasicAuto extends LinearOpMode {
 
         robot.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearRight.setDirection(DcMotor.Direction.REVERSE);
 
         robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
 
         // Send telemetry message to indicate successful Encoder reset
@@ -90,26 +100,35 @@ public class BasicAuto extends LinearOpMode {
     public void encoderDrive(double speed,
                              double leftInches, double rightInches,
                              double timeoutS) {
-        int newLeftTarget;
-        int newRightTarget;
+        int newFrontLeftTarget;
+        int newFrontRightTarget;
+        int newRearLeftTarget;
+        int newRearRightTarget;
 
         // Ensure that the opmode is still active
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newLeftTarget = robot.motorFrontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
-            newRightTarget = robot.motorFrontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
-            robot.motorFrontLeft.setTargetPosition(newLeftTarget);
-            robot.motorFrontRight.setTargetPosition(newRightTarget);
+            newFrontLeftTarget = robot.motorFrontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newFrontRightTarget = robot.motorFrontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newRearLeftTarget = robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newRearRightTarget = robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            robot.motorFrontLeft.setTargetPosition(newFrontLeftTarget);
+            robot.motorFrontRight.setTargetPosition(newFrontRightTarget);
+            robot.motorRearLeft.setTargetPosition(newRearLeftTarget);
+            robot.motorRearRight.setTargetPosition(newRearRightTarget);
 
             // Turn On RUN_TO_POSITION
             robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+            robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.motorRearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             // reset the timeout time and start motion.
             runtime.reset();
             robot.motorFrontLeft.setPower(Math.abs(speed));
             robot.motorFrontRight.setPower(Math.abs(speed));
+            robot.motorRearLeft.setPower(Math.abs(speed));
+            robot.motorRearRight.setPower(Math.abs(speed));
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -119,10 +138,10 @@ public class BasicAuto extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.motorFrontLeft.isBusy() && robot.motorFrontRight.isBusy())) {
+                    (robot.motorFrontLeft.isBusy() && robot.motorFrontRight.isBusy() && robot.motorRearLeft.isBusy() && robot.motorRearRight.isBusy())) {
 
                 // Display it for the driver.
-                telemetry.addData("Path1",  "Running to %7d :%7d", newLeftTarget,  newRightTarget);
+                telemetry.addData("Path1",  "Running to %7d :%7d", newFrontLeftTarget,  newFrontRightTarget);
                 telemetry.addData("Path2",  "Running at %7d :%7d",
                         robot.motorFrontLeft.getCurrentPosition(),
                         robot.motorFrontRight.getCurrentPosition());
@@ -132,10 +151,14 @@ public class BasicAuto extends LinearOpMode {
             // Stop all motion;
             robot.motorFrontLeft.setPower(0);
             robot.motorFrontRight.setPower(0);
+            robot.motorRearLeft.setPower(0);
+            robot.motorRearRight.setPower(0);
 
             // Turn off RUN_TO_POSITION
             robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             //  sleep(250);   // optional pause after each move
         }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name = "TeleOp")
+@TeleOp(name = "TeleOp", group = "12806")
 public class Teleop extends LinearOpMode {
 
     Robokenbot robot   = new Robokenbot();

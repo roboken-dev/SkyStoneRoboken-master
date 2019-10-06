@@ -7,42 +7,43 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name = "auto9-21")
+@Autonomous(name = "auto9-21", group = "12806")
 public class Auto9_21 extends LinearOpMode {
-    private DcMotor motorFrontLeft;  // motor1
-    private DcMotor motorRearLeft;  // motor 2
-    private DcMotor motorFrontRight; // motor 3
-    private DcMotor motorRearRight; // motor 4
-    private Servo Claw;
+
+    Robokenbot robot   = new Robokenbot();
+
 
     @Override
     public void runOpMode() throws InterruptedException {
+
+
+        robot.init(hardwareMap);
+
+        // Send telemetry message to signify robot waiting;
+        telemetry.addData("Status", "Init");    //
+        telemetry.update();
+
         float speed_control = 1;
 
-        motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
-        motorRearLeft = hardwareMap.dcMotor.get("motorRearLeft");
-        motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
-        motorRearRight = hardwareMap.dcMotor.get("motorRearRight");
-        Claw = hardwareMap.servo.get("servo");
 
-        motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
 
         while (opModeIsActive()) {
 
 
-            motorFrontLeft.setPower(0.25 * speed_control);
-            motorRearLeft.setPower(0.25 * speed_control);
-            motorFrontRight.setPower(0.25 * speed_control);
-            motorRearRight.setPower(0.25 * speed_control);
+            robot.motorFrontLeft.setPower(0.25 * speed_control);
+            robot.motorRearLeft.setPower(0.25 * speed_control);
+            robot.motorFrontRight.setPower(0.25 * speed_control);
+            robot.motorRearRight.setPower(0.25 * speed_control);
 
             Thread.sleep(3800);
-            motorFrontLeft.setPower(0);
-            motorRearLeft.setPower(0);
-            motorFrontRight.setPower(0);
-            motorRearRight.setPower(0);
+            robot.motorFrontLeft.setPower(0);
+            robot.motorRearLeft.setPower(0);
+            robot.motorFrontRight.setPower(0);
+            robot.motorRearRight.setPower(0);
             Thread.sleep(300000);
         }
     }

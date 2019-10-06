@@ -18,7 +18,7 @@ public class Teleop extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Status", "Ready to Go");    //

@@ -54,12 +54,12 @@ public class BasicAuto extends LinearOpMode {
         robot.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-/*
+
         robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
         robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         robot.motorRearRight.setDirection(DcMotor.Direction.FORWARD);
         robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
-*/
+
 
 
 
@@ -120,10 +120,10 @@ public class BasicAuto extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newFrontLeftTarget = (robot.motorFrontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
-            newFrontRightTarget = (robot.motorFrontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
-            newRearLeftTarget = -(robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
-            newRearRightTarget = -(robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
+            newFrontLeftTarget = (robot.motorFrontLeft.getCurrentPosition() - (int)(leftInches * COUNTS_PER_INCH));
+            newFrontRightTarget = (robot.motorFrontRight.getCurrentPosition() - (int)(rightInches * COUNTS_PER_INCH));
+            newRearLeftTarget = (robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
+            newRearRightTarget = (robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
 
             robot.motorFrontLeft.setTargetPosition(newFrontLeftTarget);
             robot.motorFrontRight.setTargetPosition(newFrontRightTarget);
@@ -137,16 +137,11 @@ public class BasicAuto extends LinearOpMode {
             robot.motorRearRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             // reset the timeout time and start motion.
             runtime.reset();
-/*
+
             robot.motorFrontLeft.setPower(Math.abs(speed));
             robot.motorFrontRight.setPower(Math.abs(speed));
             robot.motorRearLeft.setPower(Math.abs(speed));
             robot.motorRearRight.setPower(-Math.abs(speed));
-*/
-            robot.motorFrontLeft.setPower(-0.2);
-            robot.motorFrontRight.setPower(-0.2);
-            robot.motorRearLeft.setPower(0.2);
-            robot.motorRearRight.setPower(0.2);
 
             // keep looping while we are still active, and there is time left, and both motors are running.
             // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
@@ -156,7 +151,7 @@ public class BasicAuto extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                     (runtime.seconds() < timeoutS) &&
-                    (robot.motorFrontLeft.isBusy() && robot.motorFrontRight.isBusy() && robot.motorRearLeft.isBusy() && robot.motorRearRight.isBusy())) {
+               (robot.motorFrontLeft.isBusy() && robot.motorFrontRight.isBusy() && robot.motorRearLeft.isBusy() && robot.motorRearRight.isBusy())) {
 
                 // Display it for the driver.
                 telemetry.addData("Path1",  "Running to %7d :%7d : %d : %d", newFrontLeftTarget,  newFrontRightTarget, newRearLeftTarget, newRearRightTarget);
@@ -166,10 +161,6 @@ public class BasicAuto extends LinearOpMode {
                         robot.motorRearLeft.getCurrentPosition(),
                         robot.motorRearRight.getCurrentPosition());
                 telemetry.update();
-                robot.motorFrontLeft.setPower(0.2);
-                robot.motorFrontRight.setPower(0.2);
-                robot.motorRearLeft.setPower(0.2);
-                robot.motorRearRight.setPower(0.2);
 
             }
 

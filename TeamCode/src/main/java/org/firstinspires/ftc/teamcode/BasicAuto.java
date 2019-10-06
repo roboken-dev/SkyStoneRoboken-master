@@ -22,7 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 public class BasicAuto extends LinearOpMode {
 
-    Robokenbot robot   = new Robokenbot();   // Use a Pushbot's hardware
+    Robokenbot robot   = new Robokenbot();
     private ElapsedTime     runtime = new ElapsedTime();
 
 
@@ -120,10 +120,10 @@ public class BasicAuto extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newFrontLeftTarget = -(robot.motorFrontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
-            newFrontRightTarget = -(robot.motorFrontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
-            newRearLeftTarget = (robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
-            newRearRightTarget = (robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
+            newFrontLeftTarget = (robot.motorFrontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
+            newFrontRightTarget = (robot.motorFrontRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
+            newRearLeftTarget = -(robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
+            newRearRightTarget = -(robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
 
             robot.motorFrontLeft.setTargetPosition(newFrontLeftTarget);
             robot.motorFrontRight.setTargetPosition(newFrontRightTarget);
@@ -143,8 +143,8 @@ public class BasicAuto extends LinearOpMode {
             robot.motorRearLeft.setPower(Math.abs(speed));
             robot.motorRearRight.setPower(-Math.abs(speed));
 */
-            robot.motorFrontLeft.setPower(0.2);
-            robot.motorFrontRight.setPower(0.2);
+            robot.motorFrontLeft.setPower(-0.2);
+            robot.motorFrontRight.setPower(-0.2);
             robot.motorRearLeft.setPower(0.2);
             robot.motorRearRight.setPower(0.2);
 

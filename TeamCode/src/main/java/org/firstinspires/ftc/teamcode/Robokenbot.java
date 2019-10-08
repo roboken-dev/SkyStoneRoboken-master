@@ -20,7 +20,7 @@ public class Robokenbot
     public DcMotor motorRearLeft;  // motor 2
     public DcMotor motorFrontRight; // motor 3
     public DcMotor motorRearRight; // motor 4
-    public Servo Claw;
+    public Servo claw;
 
     public DigitalChannel digitalTouch;  // Hardware Device Object
     public ColorSensor sensorColor;
@@ -41,7 +41,7 @@ public void init(HardwareMap ahwMap) {
     motorFrontRight = hwMap.dcMotor.get("motorFrontRight");
     motorRearRight = hwMap.dcMotor.get("motorRearRight");
     //       digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
-    Claw = hwMap.servo.get("servo");
+    claw = hwMap.servo.get("servo");
 
 }
 

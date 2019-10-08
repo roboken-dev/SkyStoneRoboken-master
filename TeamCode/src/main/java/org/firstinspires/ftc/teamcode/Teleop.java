@@ -95,7 +95,21 @@ public class Teleop extends LinearOpMode {
                 telemetry.addData("Status", "Claw");    //
                 telemetry.update();
                 idle();
+
             }
+            if (gamepad1.a) {
+                robot.arm.setPower(0.2);
+
+
+            }
+
+            if (gamepad1.b) {
+                robot.arm.setPower(0);
+
+
+            }
+
+
         }
     }
 }

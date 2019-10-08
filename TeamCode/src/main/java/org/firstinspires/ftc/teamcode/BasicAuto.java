@@ -26,13 +26,13 @@ public class BasicAuto extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     SCALE_FACTOR = 1.0;
+    static final double     SCALE_FACTOR = 1.0; //  if drive speed = .2 use 75.0/76.0; if drive_speed = .1, use 1.0; if drive_speed = .3, use 75.0/77.0 note that .3 has hard time braking
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (SCALE_FACTOR * COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.1;
+    static final double     DRIVE_SPEED             = 0.2;
     static final double     TURN_SPEED              = 0.1;
 
 
@@ -77,7 +77,7 @@ public class BasicAuto extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         robot.Claw.setPosition(1.0);
-        encoderDrive(DRIVE_SPEED,  120,  120, 10.0);  // S1: Forward 24 Inches with 5 Sec timeout
+        encoderDrive(DRIVE_SPEED,  75,  75, 50.0);  // S1: Forward 24 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //robot.Claw.setPosition(1.0);
         //encoderDrive(DRIVE_SPEED, 32, 32, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
@@ -120,10 +120,10 @@ public class BasicAuto extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            newFrontLeftTarget = (robot.motorFrontLeft.getCurrentPosition() - (int)(leftInches * COUNTS_PER_INCH));
+            newFrontLeftTarget = (robot.motorFrontLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
             newFrontRightTarget = (robot.motorFrontRight.getCurrentPosition() - (int)(rightInches * COUNTS_PER_INCH));
-            newRearLeftTarget = (robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
-            newRearRightTarget = (robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
+            newRearLeftTarget = -(robot.motorRearLeft.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH));
+            newRearRightTarget = -(robot.motorRearRight.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH));
 
             robot.motorFrontLeft.setTargetPosition(newFrontLeftTarget);
             robot.motorFrontRight.setTargetPosition(newFrontRightTarget);

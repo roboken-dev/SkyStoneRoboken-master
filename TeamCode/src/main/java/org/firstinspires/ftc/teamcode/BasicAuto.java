@@ -252,7 +252,7 @@ public class BasicAuto extends LinearOpMode {
         Thread.sleep(time);
     }
 
-   	public void TurnLeftByAngle(double power, long angle)    
+   	public void TurnLeftByAngle(double power, long angle)
 	{
 	
 	}

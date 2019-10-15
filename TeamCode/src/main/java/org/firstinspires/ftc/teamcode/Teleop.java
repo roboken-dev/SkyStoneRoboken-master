@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -20,6 +21,8 @@ public class Teleop extends LinearOpMode {
 
         robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+
+
 
         telemetry.addData("Status", "Ready to Go");    //
         telemetry.update();
@@ -97,14 +100,42 @@ public class Teleop extends LinearOpMode {
                 idle();
 
             }
-            if (gamepad1.a) {
-                robot.arm.setPower(0.2);
+
+
+
+
+            if (gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
+                robot.arm.setPower(gamepad2.left_stick_y * 0.6);
+
 
 
             }
 
-            if (gamepad1.b) {
-                robot.arm.setPower(0);
+            if (gamepad2.left_stick_y == 0) {
+                robot.arm.setPower(0.0);
+
+
+
+
+            }
+            if (gamepad2.dpad_up){
+                robot.intakeServo1.setDirection(CRServo.Direction.FORWARD);
+                robot.intakeServo2.setDirection(CRServo.Direction.REVERSE);
+                robot.intakeServo1.setPower(0.2);
+                robot.intakeServo2.setPower(0.2);
+                sleep(500);
+                robot.intakeServo1.setPower(0.0);
+                robot.intakeServo2.setPower(0.0);
+
+            }
+            if (gamepad2.dpad_down){
+                robot.intakeServo1.setDirection(CRServo.Direction.REVERSE);
+                robot.intakeServo2.setDirection(CRServo.Direction.FORWARD);
+                robot.intakeServo1.setPower(0.2);
+                robot.intakeServo2.setPower(0.2);
+                sleep(500);
+                robot.intakeServo1.setPower(0.0);
+                robot.intakeServo2.setPower(0.0);
 
 
             }

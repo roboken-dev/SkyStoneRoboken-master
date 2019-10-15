@@ -22,10 +22,12 @@ public class Robokenbot
     public DcMotor motorFrontRight; // motor 3
     public DcMotor motorRearRight; // motor 4
     public Servo claw;
-public CRServo arm;
+    public CRServo arm;
     public DigitalChannel digitalTouch;  // Hardware Device Object
     public ColorSensor sensorColor;
     public DistanceSensor sensorDistance;
+    public CRServo intakeServo1;
+    public CRServo intakeServo2;
 
 HardwareMap hwMap = null;
 private ElapsedTime period =new ElapsedTime();
@@ -44,6 +46,13 @@ public void init(HardwareMap ahwMap) {
     //       digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
     claw = hwMap.servo.get("servo");
     arm=hwMap.crservo.get("arm");
+    intakeServo1=hwMap.crservo.get("intakeServo1");
+    intakeServo2=hwMap.crservo.get("intakeServo2");
+    motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
 }
 

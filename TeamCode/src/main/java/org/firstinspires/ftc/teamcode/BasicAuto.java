@@ -76,7 +76,7 @@ public class BasicAuto extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
-        robot.Claw.setPosition(1.0);
+        robot.claw.setPosition(1.0);
         encoderDrive(DRIVE_SPEED,  75,  75, 50.0);  // S1: Forward 24 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //robot.Claw.setPosition(1.0);

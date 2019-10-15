@@ -179,68 +179,55 @@ public class BasicAuto extends LinearOpMode {
         }
     }
 
-    public void DriveForward(double power) {
+    public void driveForward(double power) {
         robot.motorFrontLeft.setPower(power);
        robot.motorFrontRight.setPower(power);
     }
 
-    public void StopDriving() {
-        DriveForward(0);
+    public void stopDriving() {
+        driveForward(0);
     }
 
-    public void TurnLeft(double power) {
+    public void turnLeft(double power) {
         robot.motorFrontLeft.setPower(-power);
         robot.motorFrontRight.setPower(power);
     }
 
-    public void TurnRight(double power) {
-        TurnLeft(-power);
+    public void turnRight(double power) {
+        turnLeft(-power);
     }
 
-    public void DriveForwardTime(double power, long time) throws InterruptedException {
-        DriveForward(power);
+    public void driveForwardByTime(double power, long time) throws InterruptedException {
+        driveForward(power);
         Thread.sleep(time);
     }
 
-    public void TurnLeftTime(double power, long time) throws InterruptedException {
-        TurnLeft(power);
+    public void turnLeftByTime(double power, long time) throws InterruptedException {
+        turnLeft(power);
         Thread.sleep(time);
     }
 
-    public void TurnRightTime(double power, long time) throws InterruptedException {
-        TurnRight(power);
+    public void turnRightByTime(double power, long time) throws InterruptedException {
+        turnRight(power);
         Thread.sleep(time);
     }
 
 
-    public void DriveTillTouch(double power) {
+    public void driveTillTouched(double power) {
         while (robot.digitalTouch.getState() == true) {
-            DriveForward(power);
+            driveForward(power);
         }
-
     }
 
-    public void DriveTillDistance(double power, double distance) {
+    public void driveTillThisClose(double power, double distance) {
         double howfar;
 
         while (Double.isNaN(robot.sensorDistance.getDistance(DistanceUnit.CM)) || robot.sensorDistance.getDistance(DistanceUnit.CM) > distance) {
-            DriveForward(power);
+            driveForward(power);
         }
-
-
     }
 
-    public void StrafeLeftTIme(double power, long time) throws InterruptedException {
-        StrafeLeft(power);
-        Thread.sleep(time);
-    }
-
-    public void StrafeRightTime(double power, long time) throws InterruptedException {
-        StrafeRight(power);
-        Thread.sleep(time);
-    }
-
-    public void StrafeRight(double power)
+    public void strafeRight(double power)
     {
         robot.motorFrontLeft.setPower(-power);
         robot.motorRearLeft.setPower(power);
@@ -248,12 +235,63 @@ public class BasicAuto extends LinearOpMode {
         robot.motorRearRight.setPower(-power);
     }
 
-    public void StrafeLeft(double power) {
+    public void strafeLeft(double power) {
         robot.motorFrontLeft.setPower(power);
         robot.motorRearLeft.setPower(-power);
         robot.motorFrontRight.setPower(-power);
         robot.motorRearRight.setPower(power);
     }
+
+    public void strafeLeftByTime(double power, long time) throws InterruptedException {
+        strafeLeft(power);
+        Thread.sleep(time);
+    }
+
+    public void strafeRightByTime(double power, long time) throws InterruptedException {
+        strafeRight(power);
+        Thread.sleep(time);
+    }
+
+   	public void TurnLeftByAngle(double power, long angle)    
+	{
+	
+	}
+	
+	public void TurnRightByAngle(double power, long angle)
+	{
+	
+	}
+	
+	public void strafeRightTilBlue(double power)
+	{
+	
+	}
+	
+	public void strafeLeftTilBlue(double power)
+	{
+	
+	}
+	
+	public void strafeRightTilRed(double power)
+	{
+	
+	}
+	
+	public void strafeLeftTilRed(double power)
+	{
+	
+	}
+	
+	public void driveForwardTilBlue(double power)
+	{
+	
+	}
+	
+	public void driveForwardTileRed(double power)
+	{
+	
+	}
+	
 
 
 }

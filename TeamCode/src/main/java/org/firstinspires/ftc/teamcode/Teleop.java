@@ -101,14 +101,8 @@ public class Teleop extends LinearOpMode {
 
             }
 
-
-
-
             if (gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
                 robot.arm.setPower(gamepad2.left_stick_y * 0.6);
-
-
-
             }
 
             if (gamepad2.left_stick_y == 0) {

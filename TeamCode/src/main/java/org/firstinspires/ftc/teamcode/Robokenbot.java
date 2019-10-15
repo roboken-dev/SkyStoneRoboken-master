@@ -44,6 +44,7 @@ public void init(HardwareMap ahwMap) {
     motorFrontRight = hwMap.dcMotor.get("motorFrontRight");
     motorRearRight = hwMap.dcMotor.get("motorRearRight");
     //       digitalTouch = hardwareMap.get(DigitalChannel.class, "sensor_digital");
+
     claw = hwMap.servo.get("servo");
     arm=hwMap.crservo.get("arm");
     intakeServo1=hwMap.crservo.get("intakeServo1");

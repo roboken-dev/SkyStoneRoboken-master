@@ -27,13 +27,13 @@ public class BasicAuto extends LinearOpMode {
     private ElapsedTime     runtime = new ElapsedTime();
 
 
-    static final double     SCALE_FACTOR = 75.0/76.0; //  if drive speed = .2 use 75.0/76.0; if drive_speed = .1, use 1.0; if drive_speed = .3, use 75.0/77.0 note that .3 has hard time braking
+    static final double     SCALE_FACTOR = 75.0/75.0; //  if drive speed = .2 or .3 use 75.0/75.0;  .5 is 75.0/76.0 .4 is 75.0/75.5 if drive_speed = .1, use 1.0; if drive_speed = .3, use 75.0/77.0 note that .3 has hard time braking
     static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 0.5 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (SCALE_FACTOR * COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
             (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.2;
+    static final double     DRIVE_SPEED             = 0.3;
     static final double     TURN_SPEED              = 0.1;
 
 
@@ -51,18 +51,6 @@ public class BasicAuto extends LinearOpMode {
         telemetry.addData("Status", "Resetting Encoders");    //
         telemetry.update();
 
-        robot.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorRearRight.setDirection(DcMotor.Direction.FORWARD);
-        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
-
-
-
 
         // Send telemetry message to indicate successful Encoder reset
         telemetry.addData("Path0",  "Starting at %7d :%7d",
@@ -77,11 +65,29 @@ public class BasicAuto extends LinearOpMode {
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
-        robot.claw.setPosition(1.0);
-        encoderDrive(DRIVE_SPEED,  75,  75, 50.0);  // S1: Forward 24 Inches with 5 Sec timeout
+        robot.claw.setPosition((1.0));
+        resetToEncoder();
+        encoderDrive(DRIVE_SPEED,  -12,-12,50.0);  // S1: Forward 24 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //robot.Claw.setPosition(1.0);
         //encoderDrive(DRIVE_SPEED, 32, 32, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        resetNoMoreEncoder();
+        strafeLeftByTime(0.4, 4000);
+        resetToEncoder();
+        encoderDrive(DRIVE_SPEED, -14,-14,30.0);
+        robot.claw.setPosition((0.0));
+        sleep(1000);
+        encoderDrive(DRIVE_SPEED /4, 27, 27, 30.0);
+        robot.claw.setPosition((1.0));//claw goes up
+        resetNoMoreEncoder();
+        strafeRightByTime(0.5, 5000); //strafes out of the way
+        /*encoderDrive(DRIVE_SPEED,-20,-20,10.0);
+        resetNoMoreEncoder();
+        strafeLeftByTime(0.4,2000);
+        resetToEncoder();
+        encoderDrive(DRIVE_SPEED,-7,-7,10.0);
+        resetNoMoreEncoder();
+        strafeRightByTime(0.4,2500);*/
 
 
         telemetry.addData("Path", "Complete");
@@ -228,19 +234,19 @@ public class BasicAuto extends LinearOpMode {
         }
     }
 
-    public void strafeRight(double power)
+    public void strafeRight (double power)
     {
-        robot.motorFrontLeft.setPower(-power);
-        robot.motorRearLeft.setPower(power);
-        robot.motorFrontRight.setPower(power);
-        robot.motorRearRight.setPower(-power);
-    }
-
-    public void strafeLeft(double power) {
         robot.motorFrontLeft.setPower(power);
         robot.motorRearLeft.setPower(-power);
         robot.motorFrontRight.setPower(-power);
         robot.motorRearRight.setPower(power);
+    }
+
+    public void strafeLeft(double power) {
+        robot.motorFrontLeft.setPower(-power);
+        robot.motorRearLeft.setPower(power);
+        robot.motorFrontRight.setPower(power);
+        robot.motorRearRight.setPower(-power);
     }
 
     public void strafeLeftByTime(double power, long time) throws InterruptedException {
@@ -251,6 +257,7 @@ public class BasicAuto extends LinearOpMode {
     public void strafeRightByTime(double power, long time) throws InterruptedException {
         strafeRight(power);
         Thread.sleep(time);
+
     }
 
    	public void TurnLeftByAngle(double power, long angle)
@@ -292,7 +299,27 @@ public class BasicAuto extends LinearOpMode {
 	{
 	
 	}
-	
+	public void resetToEncoder()
+    {
+
+        robot.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorRearRight.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
+    }
+    public void resetNoMoreEncoder()
+    {
+
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearRight.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
+    }
 
 
 }

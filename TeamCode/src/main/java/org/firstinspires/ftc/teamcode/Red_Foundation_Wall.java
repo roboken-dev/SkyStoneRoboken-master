@@ -19,9 +19,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@Autonomous (name = "BasicAuto", group = "12806")
+@Autonomous (name = "Red_Foundation_Wall", group = "12806")
 
-public class BasicAuto extends LinearOpMode {
+public class Red_Foundation_Wall extends LinearOpMode {
 
     Robokenbot robot   = new Robokenbot();
     private ElapsedTime     runtime = new ElapsedTime();
@@ -73,16 +73,16 @@ public class BasicAuto extends LinearOpMode {
         //encoderDrive(DRIVE_SPEED, 32, 32, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
 
         initRunWithoutEncoder();
-        strafeLeftByTime(0.4, 4000);
+        strafeLeftByTime(0.4, 2100);
 
-        encoderDrive(DRIVE_SPEED, -14,-14,30.0);
+        encoderDrive(DRIVE_SPEED, -15,-15,30.0);
         robot.claw.setPosition((0.0));
         sleep(1000);
 
-        encoderDrive(DRIVE_SPEED /4, 27, 27, 30.0);
+        encoderDrive(DRIVE_SPEED /4, 29.5, 29.5, 30.0);
         robot.claw.setPosition((1.0));//claw goes up
 
-        strafeRightByTime(0.5, 5000); //strafes out of the way
+        strafeRightByTime(0.5, 3600); //straf5es out of the way
         /*encoderDrive(DRIVE_SPEED,-20,-20,10.0);
 
         strafeLeftByTime(0.4,2000);

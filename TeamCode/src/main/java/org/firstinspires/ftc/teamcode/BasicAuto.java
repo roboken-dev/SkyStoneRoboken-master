@@ -66,27 +66,29 @@ public class BasicAuto extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         robot.claw.setPosition((1.0));
-        resetToEncoder();
+
         encoderDrive(DRIVE_SPEED,  -12,-12,50.0);  // S1: Forward 24 Inches with 5 Sec timeout
         //encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         //robot.Claw.setPosition(1.0);
         //encoderDrive(DRIVE_SPEED, 32, 32, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        resetNoMoreEncoder();
+
+        initRunWithoutEncoder();
         strafeLeftByTime(0.4, 4000);
-        resetToEncoder();
+
         encoderDrive(DRIVE_SPEED, -14,-14,30.0);
         robot.claw.setPosition((0.0));
         sleep(1000);
+
         encoderDrive(DRIVE_SPEED /4, 27, 27, 30.0);
         robot.claw.setPosition((1.0));//claw goes up
-        resetNoMoreEncoder();
+
         strafeRightByTime(0.5, 5000); //strafes out of the way
         /*encoderDrive(DRIVE_SPEED,-20,-20,10.0);
-        resetNoMoreEncoder();
+
         strafeLeftByTime(0.4,2000);
-        resetToEncoder();
+
         encoderDrive(DRIVE_SPEED,-7,-7,10.0);
-        resetNoMoreEncoder();
+
         strafeRightByTime(0.4,2500);*/
 
 
@@ -94,16 +96,13 @@ public class BasicAuto extends LinearOpMode {
         telemetry.update();
         /*
         StrafeRightTime(DRIVE_POWER, 4000);
-
         DriveForwardTime(DRIVE_POWER, 2000);
-
         // lower and grab foundation = need real claw cdde
         robot.Claw.setPosition(0.0);
         sleep(500);
         robot.Claw.setPosition(1.0);
         DriveForwardTime(-DRIVE_POWER, 2000);
         StopDriving();
-
          */
     }
 
@@ -115,12 +114,8 @@ public class BasicAuto extends LinearOpMode {
         int newRearLeftTarget;
         int newRearRightTarget;
 
-        robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+        initRunWithEncoder();
+        
 
 
         // Ensure that the opmode is still active
@@ -177,14 +172,60 @@ public class BasicAuto extends LinearOpMode {
             robot.motorRearLeft.setPower(0);
             robot.motorRearRight.setPower(0);
 
+            initRunWithoutEncoder();
             // Turn off RUN_TO_POSITION
+
+            initRunWithoutEncoder(); // no need for the setMode below since this method already includes it.
+
+           /* 
            robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
            robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
            robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
            robot.motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+           */
+
             //  sleep(250);   // optional pause after each move
         }
     }
+
+    public void initRunWithEncoder()
+    {
+
+        robot.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorRearRight.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
+
+        robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+
+    }
+
+    public void initRunWithoutEncoder()
+    {
+
+        robot.motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearRight.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
+    }
+
+
 
     public void driveForward(double power) {
         robot.motorFrontLeft.setPower(power);
@@ -299,27 +340,6 @@ public class BasicAuto extends LinearOpMode {
 	{
 	
 	}
-	public void resetToEncoder()
-    {
-
-        robot.motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.motorRearRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorRearRight.setDirection(DcMotor.Direction.FORWARD);
-        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
-    }
-    public void resetNoMoreEncoder()
-    {
-
-        robot.motorFrontLeft.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorFrontRight.setDirection(DcMotor.Direction.FORWARD);
-        robot.motorRearRight.setDirection(DcMotor.Direction.REVERSE);
-        robot.motorRearLeft.setDirection(DcMotor.Direction.FORWARD);
-    }
 
 
 }

@@ -86,13 +86,13 @@ public class Teleop extends LinearOpMode {
                 telemetry.update();
 
             }
-            if (gamepad1.left_bumper) {
+            if (gamepad2.left_bumper) {
                 robot.claw.setPosition(0.0);
                 telemetry.addData("Status", "Claw");    //
                 telemetry.update();
             }
 
-            if (gamepad1.right_bumper) {
+            if (gamepad2.right_bumper) {
                 robot.claw.setPosition(1.0);
                 telemetry.addData("Status", "Claw");    //
                 telemetry.update();
@@ -101,7 +101,7 @@ public class Teleop extends LinearOpMode {
             }
 
             if (gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
-                robot.arm.setPower(gamepad2.left_stick_y * 0.6);
+                robot.arm.setPower(gamepad2.left_stick_y * 0.4);
             }
 
             if (gamepad2.left_stick_y == 0) {

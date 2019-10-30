@@ -14,8 +14,6 @@ public class Red_Park extends LinearOpMode {
 
     Robokenbot robot   = new Robokenbot();
 
-    static final double     DRIVE_SPEED             = 0.3;
-
     public void runOpMode() throws InterruptedException {
         /*
          * Initialize the drive system variables.
@@ -24,14 +22,11 @@ public class Red_Park extends LinearOpMode {
         robot.init(hardwareMap);
 
         waitForStart();
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
 
         robot.claw.setPosition((1.0));
 
-        robot.encoderDrive(DRIVE_SPEED,  -20,-20,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
+        robot.encoderDrive(robot.DRIVE_SPEED,  -20,-20,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
 
-//        robot.initRunWithoutEncoder();
         robot.strafeLeftByTime(0.4, 2500);
 
         telemetry.addData("Path", "Complete");

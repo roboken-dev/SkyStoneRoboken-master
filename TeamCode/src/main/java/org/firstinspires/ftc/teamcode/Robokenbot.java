@@ -74,9 +74,19 @@ public class Robokenbot
         int newRearLeftTarget;
         int newRearRightTarget;
 
+        // Send telemetry message to signify robot waiting;
+        opmode.telemetry.addData("Status", "Resetting Encoders");    //
+        opmode.telemetry.update();
+
         initRunWithEncoder();
 
-
+        // Send telemetry message to indicate successful Encoder reset
+        opmode.telemetry.addData("Path0",  "Starting at %7d :%7d",
+                motorFrontLeft.getCurrentPosition(),
+                motorFrontRight.getCurrentPosition(),
+                motorRearLeft.getCurrentPosition(),
+                motorRearRight.getCurrentPosition());
+        opmode.telemetry.update();
 
         // Ensure that the opmode is still active
         if (opmode.opModeIsActive()) {

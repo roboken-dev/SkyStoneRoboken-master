@@ -145,22 +145,11 @@ public class Robokenbot
             initRunWithoutEncoder();
             // Turn off RUN_TO_POSITION
 
-            initRunWithoutEncoder(); // no need for the setMode below since this method already includes it.
-
-           /*
-           motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-           motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-           motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-           motorRearRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-           */
-
-            //  sleep(250);   // optional pause after each move
         }
     }
 
     public void initRunWithEncoder()
     {
-
         motorFrontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -178,12 +167,10 @@ public class Robokenbot
         motorRearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
-
     }
 
     public void initRunWithoutEncoder()
     {
-
         motorFrontLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorFrontRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         motorRearLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -310,11 +297,5 @@ public class Robokenbot
     {
 
     }
-
-
-
-
-
-
 
 }

@@ -15,9 +15,6 @@ public class Blue_Foundation_Wall extends LinearOpMode {
     Robokenbot robot   = new Robokenbot();
 
     static final double     DRIVE_SPEED             = 0.3;
-    static final double     TURN_SPEED              = 0.1;
-
-    double DRIVE_POWER = 1;
 
     public void runOpMode() throws InterruptedException {
         /*

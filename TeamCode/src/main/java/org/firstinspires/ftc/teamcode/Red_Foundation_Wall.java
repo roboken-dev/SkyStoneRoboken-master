@@ -44,7 +44,7 @@ public class Red_Foundation_Wall extends LinearOpMode {
         robot.claw.setPosition((0.0));
         sleep(1000);
 
-        robot.encoderDrive(robot.DRIVE_SPEED /4, 29.5, 29.5, 30.0, this);
+        robot.encoderDrive(robot.DRIVE_SPEED /5, 29.5, 29.5, 30.0, this);
         robot.claw.setPosition((1.0));//claw goes up
 
         robot.strafeRightByTime(0.5, 3600); //straf5es out of the way

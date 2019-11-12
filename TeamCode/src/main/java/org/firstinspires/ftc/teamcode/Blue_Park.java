@@ -2,15 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@Autonomous (name = "Red_Park", group = "12806")
+@Autonomous (name = "Blue_Park", group = "12806")
 
-public class Red_Park extends LinearOpMode {
+public class Blue_Park extends LinearOpMode {
 
     Robokenbot robot   = new Robokenbot();
 
@@ -27,7 +23,7 @@ public class Red_Park extends LinearOpMode {
 
         robot.encoderDrive(robot.DRIVE_SPEED,  -25,-25,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
 
-        robot.strafeLeftByTime(0.4, 2500);
+        robot.strafeRightByTime(0.4, 2500);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

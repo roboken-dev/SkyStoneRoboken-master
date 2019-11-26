@@ -29,20 +29,20 @@ public class Blue_Foundation_Off extends LinearOpMode {
 
         robot.encoderDrive(robot.DRIVE_SPEED,  -12,-12,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
 
-        robot.strafeLeftByTime(-0.4, 1900);
+        robot.strafeLeftByTime(-0.4, 1500);
 
         robot.encoderDrive(robot.DRIVE_SPEED, -18,-18,30.0, this);
         robot.claw.setPosition((0.0));
         sleep(1000);
 
-        robot.encoderDrive(robot.DRIVE_SPEED /5, 31, 31, 30.0, this);
+        robot.encoderDrive(robot.DRIVE_SPEED /5, 32.5, 32.5, 30.0, this);
         robot.claw.setPosition((1.0));//claw goes up
 
-        robot.strafeRightByTime(-0.5, 2400);
+        robot.strafeRightByTime(-0.5, 2000);
 
         robot.encoderDrive(robot.DRIVE_SPEED, -24,-24,30.0, this);
 
-        robot.strafeRightByTime(-0.5,1600);
+        robot.strafeRightByTime(-0.5,1400);
 
 
         telemetry.addData("Path", "Complete");

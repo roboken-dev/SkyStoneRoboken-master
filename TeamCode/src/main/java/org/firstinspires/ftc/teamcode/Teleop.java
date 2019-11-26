@@ -15,7 +15,7 @@ public class Teleop extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        float speed_control = 1;
+        double speed_control = 0.5;
         double ArmSpeedControl = 0.4;
 
 
@@ -123,28 +123,34 @@ public class Teleop extends LinearOpMode {
             {
                 ArmSpeedControl = 0.4;
             }
-
-
+            if (gamepad2.a)
+            {
+                ArmSpeedControl = 0.5;
+            }
             if (gamepad2.dpad_up){
                 robot.intakeServo1.setDirection(CRServo.Direction.FORWARD);
                 robot.intakeServo2.setDirection(CRServo.Direction.REVERSE);
                 robot.intakeServo1.setPower(0.2);
                 robot.intakeServo2.setPower(0.2);
-                sleep(500);
-                robot.intakeServo1.setPower(0.0);
-                robot.intakeServo2.setPower(0.0);
 
             }
+
+            if (gamepad2.dpad_left) {
+                robot.intakeServo1.setPower(0);
+                robot.intakeServo2.setPower(0);
+            }
+
+            if (gamepad2.dpad_right) {
+                robot.intakeServo1.setPower(0);
+                robot.intakeServo2.setPower(0);
+            }
+
+
             if (gamepad2.dpad_down){
                 robot.intakeServo1.setDirection(CRServo.Direction.REVERSE);
                 robot.intakeServo2.setDirection(CRServo.Direction.FORWARD);
                 robot.intakeServo1.setPower(0.2);
                 robot.intakeServo2.setPower(0.2);
-                sleep(500);
-                robot.intakeServo1.setPower(0.0);
-                robot.intakeServo2.setPower(0.0);
-
-
             }
 
 

@@ -1,11 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Locale;
 
 
 @TeleOp(name = "TeleOp", group = "12806")
@@ -21,6 +31,21 @@ public class Teleop extends LinearOpMode {
 
         robot.init(hardwareMap);
 
+        // hsvValues is an array that will hold the hue, saturation, and value information.
+        float hsvValues[] = {0F, 0F, 0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
+
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
         robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
 
@@ -32,6 +57,34 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            // convert the RGB values to HSV values.
+            // multiply by the SCALE_FACTOR.
+            // then cast it back to int (SCALE_FACTOR is a double)
+            Color.RGBToHSV((int) (robot.sensorColor.red() * SCALE_FACTOR),
+                    (int) (robot.sensorColor.green() * SCALE_FACTOR),
+                    (int) (robot.sensorColor.blue() * SCALE_FACTOR),
+                    hsvValues);
+
+            // send the info back to driver station using telemetry function.
+            telemetry.addData("Distance (cm)",
+                    String.format(Locale.US, "%.02f", robot.sensorDistance.getDistance(DistanceUnit.CM)));
+            telemetry.addData("Alpha", robot.sensorColor.alpha());
+            telemetry.addData("Red  ", robot.sensorColor.red());
+            telemetry.addData("Green", robot.sensorColor.green());
+            telemetry.addData("Blue ", robot.sensorColor.blue());
+            telemetry.addData("Hue", hsvValues[0]);
+
+            // change the background color to match the color detected by the RGB sensor.
+            // pass a reference to the hue, saturation, and value array as an argument
+            // to the HSVToColor method.
+            relativeLayout.post(new Runnable() {
+                public void run() {
+                    relativeLayout.setBackgroundColor(Color.HSVToColor(0xff, values));
+                }
+            });
+
+
+
             double G1rightStickY = gamepad1.right_stick_y;
             double G1leftStickY = gamepad1.left_stick_y;
             float G1rightTrigger = gamepad1.right_trigger;
@@ -153,7 +206,14 @@ public class Teleop extends LinearOpMode {
                 robot.intakeServo2.setPower(0.2);
             }
 
-
+            telemetry.update();
         }
+
+        // Set the panel back to the default color
+        relativeLayout.post(new Runnable() {
+            public void run() {
+                relativeLayout.setBackgroundColor(Color.WHITE);
+            }
+        });
     }
 }

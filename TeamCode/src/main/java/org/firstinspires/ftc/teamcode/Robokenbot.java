@@ -89,7 +89,9 @@ public class Robokenbot
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        
+        // reset to default
+        initRunWithoutEncoder();
     }
 
     public void encoderDrive(double speed,

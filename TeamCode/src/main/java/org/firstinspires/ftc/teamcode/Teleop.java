@@ -29,7 +29,7 @@ public class Teleop extends LinearOpMode {
         double ArmSpeedControl = 0.4;
 
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,this);
 
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};

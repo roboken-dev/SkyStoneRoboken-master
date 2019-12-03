@@ -45,7 +45,7 @@ public class Robokenbot
     public CRServo intakeServo2;
     private ElapsedTime     runtime = new ElapsedTime();
 
-    BNO055IMU               imu;
+    BNO055IMU               imu;  //Note: you must configure the IMU on I2C channel 0, port 0.
     Orientation             lastAngles = new Orientation();
     double                  globalAngle, power = .30, correction;
 
@@ -66,7 +66,7 @@ public class Robokenbot
     public Robokenbot(){ }
 
 
-    public void init(HardwareMap ahwMap) {
+    public void init(HardwareMap ahwMap, LinearOpMode opmode) {
 
         hwMap=ahwMap;
         motorFrontLeft = hwMap.dcMotor.get("motorFrontLeft");
@@ -92,6 +92,32 @@ public class Robokenbot
         
         // reset to default
         initRunWithoutEncoder();
+
+        imu = hwMap.get(BNO055IMU.class, "imu");
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+
+        parameters.mode                = BNO055IMU.SensorMode.IMU;
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.loggingEnabled      = false;
+
+        imu.initialize(parameters);
+
+        opmode.telemetry.addData("Mode", "calibrating...");
+        opmode.telemetry.update();
+
+        // make sure the imu gyro is calibrated before continuing.
+        while (!opmode.isStopRequested() && !imu.isGyroCalibrated())
+        {
+            opmode.sleep(50);
+            opmode.idle();
+        }
+
+        opmode.telemetry.addData("Mode", "waiting for start");
+        opmode.telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
+        opmode.telemetry.update();
+
     }
 
     public void encoderDrive(double speed,
@@ -286,14 +312,112 @@ public class Robokenbot
 
     }
 
-    public void TurnLeftByAngle(double power, long angle)
-    {
+    // IMU sample from STEMRobotics educational example
 
+    /**
+     * Resets the cumulative angle tracking to zero.
+     */
+    private void resetAngle()
+    {
+        lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        globalAngle = 0;
     }
 
-    public void TurnRightByAngle(double power, long angle)
+    /**
+     * Get current cumulative angle rotation from last reset.
+     * @return Angle in degrees. + = left, - = right.
+     */
+    private double getAngle()
     {
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
 
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+
+        lastAngles = angles;
+
+        return globalAngle;
+    }
+
+    /**
+     * See if we are moving in a straight line and if not return a power correction value.
+     * @return Power adjustment, + is adjust left - is adjust right.
+     */
+    public double checkDirection()
+    {
+        // The gain value determines how sensitive the correction is to direction changes.
+        // You will have to experiment with your robot to get small smooth direction changes
+        // to stay on a straight line.
+        double correction, angle, gain = .10;
+
+        angle = getAngle();
+
+        if (angle == 0)
+            correction = 0;             // no adjustment.
+        else
+            correction = -angle;        // reverse sign of angle for correction.
+
+        correction = correction * gain;
+
+        return correction;
+    }
+
+    /**
+     * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
+     * @param degrees Degrees to turn, + is left - is right
+     */
+    public void rotate(int degrees, double power, LinearOpMode opmode)
+    {
+        double  leftPower, rightPower;
+
+        // restart imu movement tracking.
+        resetAngle();
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < 0)
+        {   // turn right.
+            turnRight(power);
+        }
+        else if (degrees > 0)
+        {   // turn left.
+            turnLeft(power);
+        }
+        else return;
+
+        // rotate until turn is completed.
+        if (degrees < 0)
+        {
+            // On right turn we have to get off zero first.
+            while (opmode.opModeIsActive() && getAngle() == 0) {}
+
+            while (opmode.opModeIsActive() && getAngle() > degrees) {}
+        }
+        else    // left turn.
+            while (opmode.opModeIsActive() && getAngle() < degrees) {}
+
+        // turn the motors off.
+
+        stopDriving();
+
+        // wait for rotation to stop.
+        opmode.sleep(1000);
+
+        // reset angle tracking on new heading.
+        resetAngle();
     }
 
     public void strafeRightTilBlue(double power)

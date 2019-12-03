@@ -21,7 +21,7 @@ public class RedSkystoneV1 extends LinearOpMode {
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,this);
         // hsvValues is an array that will hold the hue, saturation, and value information.
         float hsvValues[] = {0F, 0F, 0F};
 
@@ -39,7 +39,7 @@ public class RedSkystoneV1 extends LinearOpMode {
         // step 1 - encoder drive toward the wall of stones
 //        robot.encoderDrive(robot.DRIVE_SPEED,  -5,-5,50.0, this);
 
-        // step 2 - strafe toward the wall to park in front of the first stone (we may shave time also if we want to park in front of the 2nd stone from the wall)
+        // step 2 - strafe right toward the wall to park in front of the first stone (we may shave time also if we want to park in front of the 2nd stone from the wall)
 
         // step 3 - seek the Skystone by strafing until the color sensor sees black
         robot.strafeLeft(0.2);
@@ -64,11 +64,14 @@ public class RedSkystoneV1 extends LinearOpMode {
 
         robot.strafeLeftByTime(0.1,1000); // try to center robot in front of Skystone
 
-        // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.  May also want to turn 90 degrees.
+        // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.
         robot.claw.setPosition((0.0));
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step
+        // May also want to turn 90 degrees, depending on claw technique. If we turn, then we encoder drive using distance for remaining steps.  If we can avoid turning, we strafe instead.
+
+        robot.rotate(90, .2, this);
 
         // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
 
@@ -76,7 +79,7 @@ public class RedSkystoneV1 extends LinearOpMode {
 
         // step 8 - Release the SkyStone
 
-        // step 9 - Seek SkyBridge and park
+        // step 9 - Seek SkyBridge using downward color sensor and park
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

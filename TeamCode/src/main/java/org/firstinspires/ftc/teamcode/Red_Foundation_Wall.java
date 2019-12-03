@@ -27,7 +27,7 @@ public class Red_Foundation_Wall extends LinearOpMode {
          * Initialize the drive system variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,this);
 
         waitForStart();
         // Step through each leg of the path,

@@ -17,7 +17,7 @@ public class Auto9_21 extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
 
-        robot.init(hardwareMap);
+        robot.init(hardwareMap,this);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Init");    //

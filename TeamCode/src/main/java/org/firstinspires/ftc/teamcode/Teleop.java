@@ -48,6 +48,8 @@ public class Teleop extends LinearOpMode {
 
         robot.motorFrontRight.setDirection(DcMotor.Direction.REVERSE);
         robot.motorRearLeft.setDirection(DcMotor.Direction.REVERSE);
+        robot.motorFrontLeft.setDirection(DcMotor.Direction.FORWARD);
+        robot.motorRearRight.setDirection(DcMotor.Direction.FORWARD);
 
 
 
@@ -60,9 +62,9 @@ public class Teleop extends LinearOpMode {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
             // then cast it back to int (SCALE_FACTOR is a double)
-            Color.RGBToHSV((int) (robot.sensorColor.red() * SCALE_FACTOR),
-                    (int) (robot.sensorColor.green() * SCALE_FACTOR),
-                    (int) (robot.sensorColor.blue() * SCALE_FACTOR),
+            Color.RGBToHSV((int) (robot.bottomSensorColor.red() * SCALE_FACTOR),
+                    (int) (robot.bottomSensorColor.green() * SCALE_FACTOR),
+                    (int) (robot.bottomSensorColor.blue() * SCALE_FACTOR),
                     hsvValues);
 
             // send the info back to driver station using telemetry function.

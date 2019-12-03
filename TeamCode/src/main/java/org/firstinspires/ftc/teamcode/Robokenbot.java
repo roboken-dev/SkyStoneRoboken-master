@@ -19,6 +19,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -43,6 +45,7 @@ public class Robokenbot
     public DistanceSensor sensorDistance;
     public CRServo intakeServo1;
     public CRServo intakeServo2;
+    public ColorSensor bottomSensorColor;
     private ElapsedTime     runtime = new ElapsedTime();
 
     BNO055IMU               imu;  //Note: you must configure the IMU on I2C channel 0, port 0.
@@ -77,6 +80,7 @@ public class Robokenbot
 
         // get a reference to the color sensor.
         sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
+        bottomSensorColor = hwMap.get(ColorSensor.class,"Bottom Color Sensor");
 
         // get a reference to the distance sensor that shares the same name.
         sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
@@ -241,6 +245,8 @@ public class Robokenbot
     public void driveForward(double power) {
         motorFrontLeft.setPower(power);
         motorFrontRight.setPower(power);
+        motorRearLeft.setPower(power);
+        motorRearRight.setPower(power);
     }
 
     public void stopDriving() {
@@ -250,8 +256,8 @@ public class Robokenbot
     public void turnLeft(double power) {
         motorFrontLeft.setPower(-power);
         motorFrontRight.setPower(power);
- //       motorRearLeft.setPower(-power);
- //       motorRearRight.setPower(power);
+        motorRearLeft.setPower(-power);
+        motorRearRight.setPower(power);
     }
 
     public void turnRight(double power) {
@@ -380,12 +386,14 @@ public class Robokenbot
      * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
      * @param degrees Degrees to turn, + is left - is right
      */
-    public void rotate(int degrees, double power, LinearOpMode opmode)
+    public void rotate(int degrees, double power, boolean retainCurrentAngle, LinearOpMode opmode)
     {
         double  leftPower, rightPower;
 
         // restart imu movement tracking.
-        resetAngle();
+        if(retainCurrentAngle==false) {
+            resetAngle();
+        }
 
         // getAngle() returns + when rotating counter clockwise (left) and - when rotating
         // clockwise (right).
@@ -406,10 +414,21 @@ public class Robokenbot
             // On right turn we have to get off zero first.
             while (opmode.opModeIsActive() && getAngle() == 0) {}
 
-            while (opmode.opModeIsActive() && getAngle() > degrees) {}
+            while (opmode.opModeIsActive() && getAngle() > degrees) {
+                double currentAngle = getAngle();
+
+                opmode.telemetry.addData("angle is ",String.valueOf(currentAngle));
+                opmode.telemetry.update();
+            }
         }
         else    // left turn.
-            while (opmode.opModeIsActive() && getAngle() < degrees) {}
+            while (opmode.opModeIsActive() && getAngle() < degrees) {
+                double currentAngle = getAngle();
+
+                opmode.telemetry.addData("angle is ",String.valueOf(currentAngle));
+                opmode.telemetry.update();
+
+            }
 
         // turn the motors off.
 

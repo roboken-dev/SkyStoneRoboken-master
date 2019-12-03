@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 
-@Autonomous (name = "RedSkystoneV1", group = "12806")
+@Autonomous (name = "RedSeekSkystone", group = "12806")
 
 public class RedSkystoneV1 extends LinearOpMode {
 

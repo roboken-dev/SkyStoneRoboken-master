@@ -31,13 +31,20 @@ public class RedSkystoneV1 extends LinearOpMode {
         // sometimes it helps to multiply the raw RGB values with a scale factor
         // to amplify/attentuate the measured values.
         final double SCALE_FACTOR = 255;
+
         waitForStart();
-        // Step through each leg of the path,
-        // Note: Reverse movement is obtained by setting a negative distance (not speed)
-        hsvValues[0]=0;
+
         robot.claw.setPosition((1.0));
+
+        // step 1 - encoder drive toward the wall of stones
+//        robot.encoderDrive(robot.DRIVE_SPEED,  -5,-5,50.0, this);
+
+        // step 2 - strafe toward the wall to park in front of the first stone (we may shave time also if we want to park in front of the 2nd stone from the wall)
+
+        // step 3 - seek the Skystone by strafing until the color sensor sees black
         robot.strafeLeft(0.2);
-        while (hsvValues[0] < 101) {
+
+        do {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
             // then cast it back to int (SCALE_FACTOR is a double)
@@ -48,21 +55,28 @@ public class RedSkystoneV1 extends LinearOpMode {
 
             telemetry.addData("Distance (cm)",
                     String.format(Locale.US, "%.02f", robot.sensorDistance.getDistance(DistanceUnit.CM)));
-            telemetry.addData("Alpha", robot.sensorColor.alpha());
-            telemetry.addData("Red  ", robot.sensorColor.red());
-            telemetry.addData("Green", robot.sensorColor.green());
-            telemetry.addData("Blue ", robot.sensorColor.blue());
             telemetry.addData("Hue", hsvValues[0]);
             telemetry.update();
 
-        }
-        robot.stopDriving();
-        robot.strafeLeftByTime(0.1,1000);
+        } while (hsvValues[0] < 101);
 
+        robot.stopDriving();
+
+        robot.strafeLeftByTime(0.1,1000); // try to center robot in front of Skystone
+
+        // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.  May also want to turn 90 degrees.
         robot.claw.setPosition((0.0));
         sleep(1000);
 
-        //robot.encoderDrive(robot.DRIVE_SPEED, 5,5,30.0, this);
+        // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step
+
+        // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
+
+        // step 7 - Continue past Skybridge and into Building area
+
+        // step 8 - Release the SkyStone
+
+        // step 9 - Seek SkyBridge and park
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

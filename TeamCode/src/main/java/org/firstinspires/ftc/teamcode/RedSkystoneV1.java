@@ -35,18 +35,16 @@ public class RedSkystoneV1 extends LinearOpMode {
         waitForStart();
 
         robot.claw.setPosition((1.0));
-        robot.encoderDrive(0.4,-28,-28,8000,this);
 
         // step 1 - encoder drive toward the wall of stones
-//        robot.encoderDrive(robot.DRIVE_SPEED,  -5,-5,50.0, this);
+        robot.encoderDrive(0.4,-28,-28,8000,this);
 
-        // step 2 - strafe right toward the wall to park in front of the first stone (we may shave time also if we want to park in front of the 2nd stone from the wall)
-
-        // step 3 - seek the Skystone by strafing until the color sensor sees black
+        // step 2 - strafe right toward the wall to park in front of the 3rd stone from wall
         robot.strafeRightByTime(0.4,1000);
 
-        robot.strafeLeft(0.25);
 
+        // step 3 - seek the Skystone by strafing until the color sensor sees black
+        robot.strafeLeft(0.25);
         do {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
@@ -65,18 +63,21 @@ public class RedSkystoneV1 extends LinearOpMode {
 
         robot.stopDriving();
 
-        robot.strafeLeftByTime(0.1,1000); // try to center robot in front of Skystone
+        // we can add conditional logic here to skip all steps below except for step 6 if we don't detect any Skystones.
+        // if hsvValues[0] is not within a range that resembles black, we immediately perform step 6 and park under the SkyBridge
+        // the issue is that if this scenario occurs, we're going to lower the claw into the ground and find no SkyStone, then possible ruin the claw as we run thru the motions
 
         // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.
+//        robot.strafeLeftByTime(0.2,500); // try to center robot in front of Skystone.  power of .1 is too low.
         robot.encoderDrive(0.1,-3,-3,4000,this);
         robot.claw.setPosition((0.0));
         sleep(1000);
 
-
-        // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step
-        // May also want to turn 90 degrees, depending on claw technique. If we turn, then we encoder drive using distance for remaining steps.  If we can avoid turning, we strafe instead.
+        // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
         robot.encoderDrive(0.2,6,6,5000,this);
         robot.rotate(-90, .2, true, this);
+
+        // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
         robot.driveForward(-0.2);
         do {
             // convert the RGB values to HSV values.
@@ -94,19 +95,16 @@ public class RedSkystoneV1 extends LinearOpMode {
 
         } while (hsvValues[0] < 101);
         robot.stopDriving();
-        robot.encoderDrive(0.5,-18,-18,5000,this);
-        robot.claw.setPosition((1.0));
-        robot.strafeRightByTime(0.2,500); // try to center robot in front of Skystone
-        robot.encoderDrive(0.4,20,20,8000,this);
-
-
-        // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
 
         // step 7 - Continue past Skybridge and into Building area
+        robot.encoderDrive(0.5,-18,-18,5000,this);
 
         // step 8 - Release the SkyStone
+        robot.claw.setPosition((1.0));
 
-        // step 9 - Seek SkyBridge using downward color sensor and park
+        // step 9 - Seek SkyBridge and park (using downward color sensor?)
+        robot.strafeRightByTime(0.2,500);
+        robot.encoderDrive(0.4,20,20,8000,this);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

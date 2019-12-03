@@ -267,16 +267,24 @@ public class Robokenbot
     public void driveForwardByTime(double power, long time) throws InterruptedException {
         driveForward(power);
         Thread.sleep(time);
+        // don't we need to add stopDriving() ?
+        //stopDriving();
+
     }
 
     public void turnLeftByTime(double power, long time) throws InterruptedException {
         turnLeft(power);
         Thread.sleep(time);
+        // don't we need to add stopDriving() ?
+        //stopDriving();
+
     }
 
     public void turnRightByTime(double power, long time) throws InterruptedException {
         turnRight(power);
         Thread.sleep(time);
+        // don't we need to add stopDriving() ?
+        //stopDriving();
     }
 
 
@@ -284,6 +292,8 @@ public class Robokenbot
         while (digitalTouch.getState() == true) {
             driveForward(power);
         }
+        // don't we need to add stopDriving() ?
+        //stopDriving();
     }
 
     public void driveTillThisClose(double power, double distance) {
@@ -292,6 +302,8 @@ public class Robokenbot
         while (Double.isNaN(sensorDistance.getDistance(DistanceUnit.CM)) || sensorDistance.getDistance(DistanceUnit.CM) > distance) {
             driveForward(power);
         }
+        // don't we need to add stopDriving() ?
+        //stopDriving();
     }
 
     public void strafeRight (double power)
@@ -312,12 +324,15 @@ public class Robokenbot
     public void strafeLeftByTime(double power, long time) throws InterruptedException {
         strafeLeft(power);
         Thread.sleep(time);
+        // don't we need to add stopDriving() ?
+        //stopDriving();
     }
 
     public void strafeRightByTime(double power, long time) throws InterruptedException {
         strafeRight(power);
         Thread.sleep(time);
-
+        // don't we need to add stopDriving() ?
+        //stopDriving();
     }
 
     // IMU sample from STEMRobotics educational example

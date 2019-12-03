@@ -250,6 +250,8 @@ public class Robokenbot
     public void turnLeft(double power) {
         motorFrontLeft.setPower(-power);
         motorFrontRight.setPower(power);
+ //       motorRearLeft.setPower(-power);
+ //       motorRearRight.setPower(power);
     }
 
     public void turnRight(double power) {

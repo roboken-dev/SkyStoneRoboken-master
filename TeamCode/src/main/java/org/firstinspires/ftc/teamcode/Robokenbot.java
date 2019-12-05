@@ -118,6 +118,8 @@ public class Robokenbot
             opmode.idle();
         }
 
+        resetAngle(); // reset robot IMU angle to current heading. Zero.
+
         opmode.telemetry.addData("Mode", "waiting for start");
         opmode.telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         opmode.telemetry.update();
@@ -340,7 +342,7 @@ public class Robokenbot
     /**
      * Resets the cumulative angle tracking to zero.
      */
-    private void resetAngle()
+    public void resetAngle()
     {
         lastAngles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 

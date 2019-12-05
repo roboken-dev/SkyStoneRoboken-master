@@ -10,7 +10,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 
-@Autonomous (name = "RedSeekSkystone", group = "12806")
+@Autonomous (name = "RedSeekSkystone", group = "12806") // drive to bridge via SkyStone path
+//@Autonomous (name = "RedSeekSkystone_Wall", group = "12806") // drive to bridge via wall path
 
 public class RedSkystoneV1 extends LinearOpMode {
 
@@ -74,7 +75,11 @@ public class RedSkystoneV1 extends LinearOpMode {
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
+
+        // if we want to drive to bridge via wall path to make room for alliance partner, we need to move all the way back to the wall instead of just a few inches back
         robot.encoderDrive(0.2,6,6,5000,this);
+
+
         robot.rotate(-90, .2, true, this);
 
         // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor

@@ -13,28 +13,25 @@ import java.util.Locale;
 @Autonomous (name = "RedSeekSkystone", group = "12806") // drive to bridge via SkyStone path
 //@Autonomous (name = "RedSeekSkystone_Wall", group = "12806") // drive to bridge via wall path
 
-public class RedSkystoneV1 extends LinearOpMode {
+public class RedSeekSkystone extends LinearOpMode {
 
     Robokenbot robot   = new Robokenbot();
 
     public void runOpMode() throws InterruptedException {
-        /*
-         * Initialize the drive system variables.
-         * The init() method of the hardware class does all the work here
-         */
-        robot.init(hardwareMap,this);
-        // hsvValues is an array that will hold the hue, saturation, and value information.
+
         float hsvValues[] = {0F, 0F, 0F};
 
-        // values is a reference to the hsvValues array.
         final float values[] = hsvValues;
 
         // sometimes it helps to multiply the raw RGB values with a scale factor
         // to amplify/attentuate the measured values.
         final double SCALE_FACTOR = 255;
 
+        robot.init(hardwareMap,this);
+
         waitForStart();
 
+        // raise claw to default position
         robot.claw.setPosition((1.0));
 
         // step 1 - encoder drive toward the wall of stones
@@ -75,10 +72,8 @@ public class RedSkystoneV1 extends LinearOpMode {
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
-
-        // if we want to drive to bridge via wall path to make room for alliance partner, we need to move all the way back to the wall instead of just a few inches back
         robot.encoderDrive(0.2,6,6,5000,this);
-
+        // for SeekSkystone_Wall version, we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
 
         robot.rotate(-90, .2, true, this);
 
@@ -107,7 +102,7 @@ public class RedSkystoneV1 extends LinearOpMode {
         // step 8 - Release the SkyStone
         robot.claw.setPosition((1.0));
 
-        // step 9 - Seek SkyBridge and park (using downward color sensor?)
+        // step 9 - Seek SkyBridge and park (alternately, we can can downward color sensor instead of distance)
         robot.strafeRightByTime(0.2,500);
         robot.encoderDrive(0.4,20,20,8000,this);
 

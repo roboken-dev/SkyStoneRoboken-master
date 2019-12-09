@@ -458,32 +458,13 @@ public class Robokenbot
         resetAngle();
     }
 
-    public void strafeRightTilBlue(double power)
-    {
-
-    }
-
-    public void strafeLeftTilBlue(double power)
-    {
-
-    }
-
-    public void strafeRightTilRed(double power)
-    {
-
-    }
-
-    public void strafeLeftTilRed(double power)
-    {
-
-    }
-
-    public void driveForwardTilBlue(double power)
-    {
-
-    }
-
-    public void driveForwardTilRed(double power)
+    /*
+    Add a feature to the teleop to automate depositing the blocks in response to a button press -
+    this turns on the intake servos to spit out the block while at the same time turning on the drive
+    wheels to back up. Ideally the powers are set so that the speed of the back up is the same as the
+    speed of the block being spit out so that the block doesn't actually move and the robot just backs away.
+     */
+    public void releaseStoneWhileBackingAway()
     {
 
     }

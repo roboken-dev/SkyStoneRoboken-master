@@ -21,8 +21,6 @@ public class RedSeekSkystone extends LinearOpMode {
 
         float hsvValues[] = {0F, 0F, 0F};
 
-        final float values[] = hsvValues;
-
         // sometimes it helps to multiply the raw RGB values with a scale factor
         // to amplify/attentuate the measured values.
         final double SCALE_FACTOR = 255;
@@ -37,7 +35,7 @@ public class RedSeekSkystone extends LinearOpMode {
         // step 1 - encoder drive toward the wall of stones
         robot.encoderDrive(0.4,-28,-28,8000,this);
 
-        // step 2 - strafe right toward the wall to park in front of the 3rd stone from wall
+        // step 2 - strafe left toward the wall to park in front of the 3rd stone from wall
         robot.strafeRightByTime(0.4,1000);
 
 

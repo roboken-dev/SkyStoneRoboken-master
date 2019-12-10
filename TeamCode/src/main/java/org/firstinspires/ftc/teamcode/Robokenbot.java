@@ -251,6 +251,13 @@ public class Robokenbot
         motorRearRight.setPower(power);
     }
 
+    public void driveBackward(double power) {
+        motorFrontLeft.setPower(-power);
+        motorFrontRight.setPower(-power);
+        motorRearLeft.setPower(-power);
+        motorRearRight.setPower(-power);
+    }
+
     public void stopDriving() {
         driveForward(0);
     }
@@ -456,17 +463,6 @@ public class Robokenbot
 
         // reset angle tracking on new heading.
         resetAngle();
-    }
-
-    /*
-    Add a feature to the teleop to automate depositing the blocks in response to a button press -
-    this turns on the intake servos to spit out the block while at the same time turning on the drive
-    wheels to back up. Ideally the powers are set so that the speed of the back up is the same as the
-    speed of the block being spit out so that the block doesn't actually move and the robot just backs away.
-     */
-    public void releaseStoneWhileBackingAway()
-    {
-
     }
 
 }

@@ -201,6 +201,7 @@ public class Teleop extends LinearOpMode {
             }
 
 
+
             if (gamepad2.dpad_down){
                 robot.intakeServo1.setDirection(CRServo.Direction.REVERSE);
                 robot.intakeServo2.setDirection(CRServo.Direction.FORWARD);
@@ -208,6 +209,18 @@ public class Teleop extends LinearOpMode {
                 robot.intakeServo2.setPower(0.2);
             }
 
+            if (gamepad2.x) {
+                robot.intakeServo1.setDirection(CRServo.Direction.REVERSE);
+                robot.intakeServo2.setDirection(CRServo.Direction.FORWARD);
+                robot.intakeServo1.setPower(0.2);
+                robot.intakeServo2.setPower(0.2);
+                robot.driveForward(.17);
+                sleep(1000);
+                robot.intakeServo1.setPower(0);
+                robot.intakeServo2.setPower(0);
+                robot.stopDriving();
+
+            }
             telemetry.update();
         }
 

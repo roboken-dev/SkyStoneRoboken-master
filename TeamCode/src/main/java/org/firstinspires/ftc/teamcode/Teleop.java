@@ -215,7 +215,7 @@ public class Teleop extends LinearOpMode {
                 robot.intakeServo1.setPower(0.2);
                 robot.intakeServo2.setPower(0.2);
                 robot.driveForward(.17);
-                sleep(1000);
+                sleep(1300);
                 robot.intakeServo1.setPower(0);
                 robot.intakeServo2.setPower(0);
                 robot.stopDriving();

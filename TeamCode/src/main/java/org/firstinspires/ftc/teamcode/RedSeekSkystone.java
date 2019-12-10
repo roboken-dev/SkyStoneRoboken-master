@@ -65,7 +65,7 @@ public class RedSeekSkystone extends LinearOpMode {
 
         // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.
 //        robot.strafeLeftByTime(0.2,500); // try to center robot in front of Skystone.  power of .1 is too low.
-        robot.encoderDrive(0.1,-3,-3,4000,this);
+        robot.encoderDrive(0.1,-2.5,-2.5,4000,this);
         robot.claw.setPosition((0.0));
         sleep(1000);
 

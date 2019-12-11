@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 
-@Autonomous (name = "Red_Foundation_Wall", group = "12806")
+@Autonomous (name = "RedFoundationWall", group = "12806")
 
 public class Red_Foundation_Wall extends LinearOpMode {
 

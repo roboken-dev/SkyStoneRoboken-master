@@ -10,7 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 
-@Autonomous (name = "RedSeekSkystone_Wall", group = "12806") // drive to bridge via SkyStone path
+@Autonomous (name = "RedSeekSkystoneWall", group = "12806") // drive to bridge via SkyStone path
 //@Autonomous (name = "RedSeekSkystone_Wall", group = "12806") // drive to bridge via wall path
 
 public class RedSeekSkystoneWall extends LinearOpMode {
@@ -35,7 +35,7 @@ public class RedSeekSkystoneWall extends LinearOpMode {
         // step 1 - encoder drive toward the wall of stones
         robot.encoderDrive(0.4,-28,-28,8000,this);
 
-        // step 2 - strafe left toward the wall to park in front of the 3rd stone from wall
+        // step 2 - strafe left  (robot is backwards, so use opposite) toward the wall to park in front of the 3rd stone from wall
         robot.strafeRightByTime(0.4,1000);
 
 
@@ -70,8 +70,8 @@ public class RedSeekSkystoneWall extends LinearOpMode {
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
-        robot.encoderDrive(0.2,6,6,5000,this);
-        // for SeekSkystone_Wall version, we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
+        robot.encoderDrive(0.2,54,54,5000,this);
+        // we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
 
         robot.rotate(-90, .2, true, this);
 
@@ -101,7 +101,7 @@ public class RedSeekSkystoneWall extends LinearOpMode {
         robot.claw.setPosition((1.0));
 
         // step 9 - Seek SkyBridge and park (alternately, we can can downward color sensor instead of distance)
-        robot.strafeLeftByTime(0.2,2500);
+        robot.strafeRightByTime(0.2,500);
         robot.encoderDrive(0.4,20,20,8000,this);
 
         telemetry.addData("Path", "Complete");

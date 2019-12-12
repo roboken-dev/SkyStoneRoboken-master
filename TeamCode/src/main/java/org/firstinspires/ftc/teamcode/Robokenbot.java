@@ -108,7 +108,7 @@ public class Robokenbot
 
         imu.initialize(parameters);
 
-        opmode.telemetry.addData("Mode", "calibrating...");
+        opmode.telemetry.addData("Status", "Calibrating IMU...");
         opmode.telemetry.update();
 
         // make sure the imu gyro is calibrated before continuing.
@@ -120,7 +120,7 @@ public class Robokenbot
 
         resetAngle(); // reset robot IMU angle to current heading. Zero.
 
-        opmode.telemetry.addData("Mode", "waiting for start");
+        opmode.telemetry.addData("Status", "Ready for Start");
         opmode.telemetry.addData("imu calib status", imu.getCalibrationStatus().toString());
         opmode.telemetry.update();
 
@@ -345,6 +345,26 @@ public class Robokenbot
     }
 
     // IMU sample from STEMRobotics educational example
+
+    /*  for auto-correction while driving, using this pseudocode
+
+            while (opModeIsActive())
+        {
+            // Use gyro to drive in a straight line.
+            correction = checkDirection();
+
+            telemetry.addData("1 imu heading", lastAngles.firstAngle);
+            telemetry.addData("2 global heading", globalAngle);
+            telemetry.addData("3 correction", correction);
+            telemetry.update();
+
+            leftMotor.setPower(power - correction);  // this is for regular motors. adapt for mech.
+            rightMotor.setPower(power + correction);
+
+     */
+
+
+
 
     /**
      * Resets the cumulative angle tracking to zero.

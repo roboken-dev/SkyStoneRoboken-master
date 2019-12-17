@@ -70,7 +70,7 @@ public class RedSeekSkystoneWall extends LinearOpMode {
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
-        robot.encoderDrive(0.2,54,54,5000,this);
+        robot.encoderDrive(0.2,30,30,5000,this);
         // we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
 
         robot.rotate(-90, .2, true, this);

@@ -36,7 +36,7 @@ public class BlueSeekSkystoneWall extends LinearOpMode {
         robot.encoderDrive(0.4,-28,-28,8000,this);
 
         // step 2 - strafe left  (robot is backwards, so use opposite) toward the wall to park in front of the 3rd stone from wall
-        robot.strafeLeftByTime(0.4,1000);
+        robot.strafeLeftByTime(0.4,1800);
 
 
         // step 3 - seek the Skystone by strafing until the color sensor sees black
@@ -64,19 +64,19 @@ public class BlueSeekSkystoneWall extends LinearOpMode {
         // the issue is that if this scenario occurs, we're going to lower the claw into the ground and find no SkyStone, then possible ruin the claw as we run thru the motions
 
         // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.
-        robot.strafeRightByTime(0.2,500); // try to center robot in front of Skystone.  power of .1 is too low.
+        robot.strafeRightByTime(0.2,1800); // try to center robot in front of Skystone.  power of .1 is too low.
         robot.encoderDrive(0.1,-2.5,-2.5,4000,this);
         robot.claw.setPosition((0.0));
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
-        robot.encoderDrive(0.2,54,54,5000,this);
+        robot.encoderDrive(0.2,32,32,5000,this);
         // we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
 
         robot.rotate(90, .2, true, this);
 
         // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
-        robot.driveForward(-0.2);
+        robot.driveForward(-0.35);
         do {
             // convert the RGB values to HSV values.
             // multiply by the SCALE_FACTOR.
@@ -101,7 +101,7 @@ public class BlueSeekSkystoneWall extends LinearOpMode {
         robot.claw.setPosition((1.0));
 
         // step 9 - Seek SkyBridge and park (alternately, we can can downward color sensor instead of distance)
-        robot.strafeLeftByTime(0.2,2500);
+        //robot.strafeLeftByTime(0.0,2000);
         robot.encoderDrive(0.4,20,20,8000,this);
 
         telemetry.addData("Path", "Complete");

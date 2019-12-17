@@ -134,10 +134,10 @@ public class Teleop extends LinearOpMode {
             } else {
 
                 // how to cube  x = Math.pow(y, 3);
-                robot.motorFrontLeft.setPower(G1leftStickY * speed_control);
-                robot.motorRearLeft.setPower(G1leftStickY * speed_control);
-                robot.motorFrontRight.setPower(G1rightStickY * speed_control);
-                robot.motorRearRight.setPower(G1rightStickY * speed_control);
+                robot.motorFrontLeft.setPower(G1leftStickY * Math.abs(G1leftStickY) * speed_control);
+                robot.motorRearLeft.setPower(G1leftStickY * Math.abs(G1leftStickY) * speed_control);
+                robot.motorFrontRight.setPower(G1rightStickY * Math.abs(G1rightStickY)  * speed_control);
+                robot.motorRearRight.setPower(G1rightStickY * Math.abs(G1rightStickY)  * speed_control);
 
                 telemetry.addData("Status", "Moving");    //
                 telemetry.update();

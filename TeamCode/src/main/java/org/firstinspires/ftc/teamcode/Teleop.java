@@ -26,7 +26,7 @@ public class Teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         double speed_control = 0.5;
-        double ArmSpeedControl = 0.4;
+        double ArmSpeedControl = 0.6;
 
 
         robot.init(hardwareMap,this);
@@ -158,7 +158,11 @@ public class Teleop extends LinearOpMode {
             }
 
             if (gamepad2.left_stick_y > 0 || gamepad2.left_stick_y < 0) {
-                robot.arm.setPower(gamepad2.left_stick_y * ArmSpeedControl);
+                robot.arm.setPower(gamepad2.left_stick_y * ArmSpeedControl+0.2);
+            }
+
+            if (gamepad2.left_stick_y < 0) {
+                robot.arm.setPower(gamepad2.left_stick_y *( ArmSpeedControl));
             }
 
             if (gamepad2.left_stick_y == 0) {

@@ -27,7 +27,7 @@ public class Blue_Foundation_Off extends LinearOpMode {
 
         robot.claw.setPosition((1.0));
 
-        robot.encoderDrive(robot.DRIVE_SPEED,  -12,-12,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
+        robot.encoderDrive(robot.DRIVE_SPEED,  -15,-15,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
 
         robot.strafeLeftByTime(-0.4, 1500);
 
@@ -42,7 +42,7 @@ public class Blue_Foundation_Off extends LinearOpMode {
 
         robot.encoderDrive(robot.DRIVE_SPEED, -24,-24,30.0, this);
 
-        robot.strafeRightByTime(-0.5,1400);
+        robot.strafeRightByTime(-0.5,1425);
 
 
         telemetry.addData("Path", "Complete");

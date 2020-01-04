@@ -27,7 +27,7 @@ public class Red_Foundation_Off extends LinearOpMode {
 
         robot.claw.setPosition((1.0));
 
-        robot.encoderDrive(robot.DRIVE_SPEED,  -12,-12,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
+        robot.encoderDrive(robot.DRIVE_SPEED,  -15,-15,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
 
         robot.strafeLeftByTime(0.4, 2100);
 
@@ -40,7 +40,7 @@ public class Red_Foundation_Off extends LinearOpMode {
 
         robot.strafeRightByTime(0.5, 2400);
         robot.encoderDrive(robot.DRIVE_SPEED, -24,-24,30.0, this);
-        robot.strafeRightByTime(0.5,1300);
+        robot.strafeRightByTime(0.5,1425);
 
         //straf5es out of the way
         /*encoderDrive(DRIVE_SPEED,-20,-20,10.0);

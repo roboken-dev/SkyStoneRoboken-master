@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous (name = "Blue_Park_Off_Sky", group = "12806")
+@Autonomous (name = "Blue_Park_On_Sky", group = "12806")
 
-public class Blue_Park extends LinearOpMode {
+public class Blue_Park_On extends LinearOpMode {
 
     Robokenbot robot   = new Robokenbot();
 
@@ -21,7 +21,7 @@ public class Blue_Park extends LinearOpMode {
 
         robot.claw.setPosition((1.0));
 
-        robot.encoderDrive(robot.DRIVE_SPEED,  -25,-25,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
+        robot.encoderDrive(robot.DRIVE_SPEED,  -2,-2,50.0, this);  // S1: Forward 24 Inches with 5 Sec timeout
 
         robot.strafeRightByTime(0.4, 3000);
 

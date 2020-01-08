@@ -36,7 +36,7 @@ public class BlueSeekSkystoneWall extends LinearOpMode {
         robot.encoderDrive(0.4,-28,-28,8000,this);
 
         // step 2 - strafe left  (robot is backwards, so use opposite) toward the wall to park in front of the 3rd stone from wall
-        robot.strafeLeftByTime(0.4,1700);
+        robot.strafeLeftByTime(0.4,1800);
 
 
         // step 3 - seek the Skystone by strafing until the color sensor sees black
@@ -70,12 +70,18 @@ public class BlueSeekSkystoneWall extends LinearOpMode {
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
-        robot.encoderDrive(0.2,32,32,5000,this);
+        robot.encoderDrive(0.2,12,12,5000,this);
         // we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
 
         robot.rotate(90, .2, true, this);
 
         // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
+
+        robot.encoderDrive(0.3,-18,-18,5000,this);
+
+        robot.strafeRightByTime(0.4, 2700);
+
+
         robot.driveForward(-0.35);
         do {
             // convert the RGB values to HSV values.

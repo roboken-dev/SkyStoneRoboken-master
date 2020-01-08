@@ -36,7 +36,7 @@ public class BlueSeekSkystone extends LinearOpMode {
         robot.encoderDrive(0.4,-28,-28,8000,this);
 
         // step 2 - strafe right (robot is backwards, so use opposite) toward the wall to park in front of the 3rd stone from wall
-        robot.strafeLeftByTime(0.4,1700);
+        robot.strafeLeftByTime(0.4,1800);
 
 
         // step 3 - seek the Skystone by strafing until the color sensor sees black
@@ -64,7 +64,7 @@ public class BlueSeekSkystone extends LinearOpMode {
         // the issue is that if this scenario occurs, we're going to lower the claw into the ground and find no SkyStone, then possible ruin the claw as we run thru the motions
 
         // step 4 - grab the Skystone. We may need to move forward a tad to position the robot.
-        robot.strafeRightByTime(0.25,1500); // try to center robot in front of Skystone.  power of .1 is too low.
+        robot.strafeRightByTime(0.25,1200); // try to center robot in front of Skystone.  power of .1 is too low.
         robot.encoderDrive(0.1,-4,-4,4000,this);
         robot.claw.setPosition((0.0));
         sleep(2000);

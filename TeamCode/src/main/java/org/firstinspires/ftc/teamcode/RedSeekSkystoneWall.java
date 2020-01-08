@@ -58,6 +58,7 @@ public class RedSeekSkystoneWall extends LinearOpMode {
         } while (hsvValues[0] < 101);
 
         robot.stopDriving();
+        robot.strafeRightByTime(0.4,300);
 
         // we can add conditional logic here to skip all steps below except for step 6 if we don't detect any Skystones.
         // if hsvValues[0] is not within a range that resembles black, we immediately perform step 6 and park under the SkyBridge
@@ -70,10 +71,13 @@ public class RedSeekSkystoneWall extends LinearOpMode {
         sleep(1000);
 
         // step 5 - back the robot away a tad from wall of stones, to avoid hitting the Skybridge pylon in the next step, then rotate
-        robot.encoderDrive(0.2,30,30,5000,this);
+        robot.encoderDrive(0.2,12,12,5000,this);
         // we want to drive to bridge via wall path to make room for alliance partner, so we will need to move all the way back to the wall instead of just a few inches back
 
         robot.rotate(-90, .2, true, this);
+        robot.encoderDrive(0.3,-18,-18,5000,this);
+        robot.strafeLeftByTime(0.4, 2700);
+
 
         // step 6 - Seek SkyBridge - strafe toward the Skybridge using downward color sensor
         robot.driveForward(-0.2);

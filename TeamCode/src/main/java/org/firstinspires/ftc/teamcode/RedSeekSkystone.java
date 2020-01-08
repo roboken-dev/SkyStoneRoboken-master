@@ -36,7 +36,7 @@ public class RedSeekSkystone extends LinearOpMode {
         robot.encoderDrive(0.4,-28,-28,8000,this);
 
         // step 2 - strafe left (robot is backwards, so use opposite) toward the wall to park in front of the 3rd stone from wall
-        robot.strafeRightByTime(0.4,900);
+        robot.strafeRightByTime(0.4,1100);
 
 
         // step 3 - seek the Skystone by strafing until the color sensor sees black

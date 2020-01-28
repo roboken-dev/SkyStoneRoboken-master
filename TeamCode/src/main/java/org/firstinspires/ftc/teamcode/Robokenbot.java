@@ -479,7 +479,7 @@ public class Robokenbot
         stopDriving();
 
         // wait for rotation to stop.
-        opmode.sleep(1000);
+        opmode.sleep(500);
 
         // reset angle tracking on new heading.
         resetAngle();

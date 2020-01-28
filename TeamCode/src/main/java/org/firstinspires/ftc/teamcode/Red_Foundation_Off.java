@@ -39,6 +39,7 @@ public class Red_Foundation_Off extends LinearOpMode {
         robot.claw.setPosition((1.0));//claw goes up
 
         robot.strafeRightByTime(0.5, 2400);
+        robot.rotate(0, .2, true, this);
         robot.encoderDrive(robot.DRIVE_SPEED, -24,-24,30.0, this);
         robot.strafeRightByTime(0.5,1425);
 

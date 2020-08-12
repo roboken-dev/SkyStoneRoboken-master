@@ -225,6 +225,8 @@ public class Teleop extends LinearOpMode {
                 robot.stopDriving();
 
             }
+
+            robot.capstoneServo.setPosition(1-0.6*gamepad2.right_trigger);
             telemetry.update();
         }
 

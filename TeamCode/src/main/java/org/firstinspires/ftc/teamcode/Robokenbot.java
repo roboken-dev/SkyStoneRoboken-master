@@ -46,6 +46,8 @@ public class Robokenbot
     public CRServo intakeServo1;
     public CRServo intakeServo2;
     public ColorSensor bottomSensorColor;
+    public Servo capstoneServo;
+
     private ElapsedTime     runtime = new ElapsedTime();
 
     BNO055IMU               imu;  //Note: you must configure the IMU on I2C channel 0, port 0.
@@ -89,6 +91,8 @@ public class Robokenbot
         arm=hwMap.crservo.get("arm");
         intakeServo1=hwMap.crservo.get("intakeServo1");
         intakeServo2=hwMap.crservo.get("intakeServo2");
+        capstoneServo=hwMap.servo.get("capstone");
+
         motorFrontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorFrontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         motorRearLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
